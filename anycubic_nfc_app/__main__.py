@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from .nfc_manager import SpoolReader
@@ -36,7 +37,7 @@ def read_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = reader.read_spool()
-    print(spool_specs)
+    print(json.dumps(spool_specs, indent=4))
 
 
 if __name__ == "__main__":
