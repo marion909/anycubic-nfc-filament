@@ -69,16 +69,16 @@ class SpoolData(CardData):
 
     def _write_string(self, page: int, data: str) -> None:
         """
-        Write a string
+        Write a string (max 20 characters)
         :param page: Page in the data
         :param data: String to write
         """
-        for i in range(len(data)):
+        for i in range(min(len(data), 20)):
             self._write_byte(page + i // 4, i % 4, ord(data[i]))
 
     def _read_string(self, page) -> str:
         """
-        Read a string
+        Read a string (max 20 characters)
         :param page: Page in the data
         :return: The read string
         """
@@ -87,6 +87,8 @@ class SpoolData(CardData):
         byte = self._read_byte(page, i)
         while byte > 0:
             data += chr(byte)
+            if len(data) >= 20:
+                break
             i += 1
             if i == 4:
                 i = 0
@@ -121,6 +123,8 @@ class SpoolData(CardData):
         # Type
         if spool_specs["type"] == "PLA+":
             self._write_string(0x0f, "PLA+")
+        if spool_specs["type"] == "PLA?High?Speed":
+            self._write_string(0x0f, "PLA?High?Speed")
         else:
             self._write_string(0x0f, "PLA")
 
@@ -137,6 +141,18 @@ class SpoolData(CardData):
         # Nozzle temp
         self._write_bytes(0x18, 0, spool_specs["nozzle_min"])
         self._write_bytes(0x18, 2, spool_specs["nozzle_max"])
+
+        # Additional print speed ranges (optional)
+        if "range_b" in spool_specs:
+            self._write_bytes(0x19, 0, spool_specs["range_b"].get("speed_min", 0))
+            self._write_bytes(0x19, 2, spool_specs["range_b"].get("speed_max", 0))
+            self._write_bytes(0x1a, 0, spool_specs["range_b"].get("nozzle_min", 0))
+            self._write_bytes(0x1a, 2, spool_specs["range_b"].get("nozzle_max", 0))
+        if "range_c" in spool_specs:
+            self._write_bytes(0x1b, 0, spool_specs["range_c"].get("speed_min", 0))
+            self._write_bytes(0x1b, 2, spool_specs["range_c"].get("speed_max", 0))
+            self._write_bytes(0x1c, 0, spool_specs["range_c"].get("nozzle_min", 0))
+            self._write_bytes(0x1c, 2, spool_specs["range_c"].get("nozzle_max", 0))
 
         # Bed temp
         self._write_bytes(0x1d, 0, spool_specs["bed_min"])
@@ -167,9 +183,21 @@ class SpoolData(CardData):
             "speed_max": self._read_bytes(0x17, 2),
             "nozzle_min": self._read_bytes(0x18, 0),
             "nozzle_max": self._read_bytes(0x18, 2),
+            "range_b": {
+                "speed_min": self._read_bytes(0x19, 0),
+                "speed_max": self._read_bytes(0x19, 2),
+                "nozzle_min": self._read_bytes(0x1a, 0),
+                "nozzle_max": self._read_bytes(0x1a, 2)
+            },
+            "range_c": {
+                "speed_min": self._read_bytes(0x1b, 0),
+                "speed_max": self._read_bytes(0x1b, 2),
+                "nozzle_min": self._read_bytes(0x1c, 0),
+                "nozzle_max": self._read_bytes(0x1c, 2)
+            },
             "bed_min": self._read_bytes(0x1d, 0),
             "bed_max": self._read_bytes(0x1d, 2),
-            "diameter": self._read_bytes(0x1e, 0),
+            "diameter": self._read_bytes(0x1e, 0) / 100,
             "length": self._read_bytes(0x1e, 2),
             "weight": self._read_bytes(0x1f, 0),
         }

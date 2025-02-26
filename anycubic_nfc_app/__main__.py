@@ -11,14 +11,26 @@ def write_spool() -> None:
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
         "sku": "AHPLPBW-102",
-        "type": "PLA+",
+        "type": "PLA",
         "color_r": 255,
         "color_g": 0,
         "color_b": 0,
-        "speed_min": 50,
-        "speed_max": 100,
-        "nozzle_min": 205,
-        "nozzle_max": 215,
+        "speed_min": 0,
+        "speed_max": 0,
+        "nozzle_min": 200,
+        "nozzle_max": 210,
+        "range_b": {
+            "speed_min": 0,
+            "speed_max": 0,
+            "nozzle_min": 0,
+            "nozzle_max": 0
+        },
+        "range_c": {
+            "speed_min": 0,
+            "speed_max": 0,
+            "nozzle_min": 0,
+            "nozzle_max": 0
+        },
         "bed_min": 50,
         "bed_max": 60,
         "diameter": 1.75,
@@ -44,4 +56,5 @@ if __name__ == "__main__":
     """
     App init point
     """
+    #write_spool()
     read_spool()
