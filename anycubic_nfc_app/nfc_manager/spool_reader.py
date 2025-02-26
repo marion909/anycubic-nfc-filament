@@ -132,7 +132,7 @@ class SpoolData(CardData):
         self._write_byte(0x14, 3, spool_specs["color_r"])
         self._write_byte(0x14, 2, spool_specs["color_g"])
         self._write_byte(0x14, 1, spool_specs["color_b"])
-        self._write_byte(0x14, 0, 0xff)
+        self._write_byte(0x14, 0, spool_specs.get("color_a", 0xff))
 
         # Print speed (optional)
         self._write_bytes(0x17, 0, spool_specs.get("speed_min", 0))
@@ -179,6 +179,7 @@ class SpoolData(CardData):
             "color_r": self._read_byte(0x14, 3),
             "color_g": self._read_byte(0x14, 2),
             "color_b": self._read_byte(0x14, 1),
+            "color_a": self._read_byte(0x14, 0),
             "speed_min": self._read_bytes(0x17, 0),
             "speed_max": self._read_bytes(0x17, 2),
             "nozzle_min": self._read_bytes(0x18, 0),

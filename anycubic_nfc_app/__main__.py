@@ -15,6 +15,7 @@ def write_spool() -> None:
         "color_r": 255,
         "color_g": 0,
         "color_b": 0,
+        "color_a": 255,
         "speed_min": 0,
         "speed_max": 0,
         "nozzle_min": 200,
