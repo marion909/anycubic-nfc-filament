@@ -16,6 +16,18 @@ def write_spool() -> None:
         "color_g": 0,
         "color_b": 0,
         "color_a": 255,
+        "color_secondary": {
+            "color_r": 0,
+            "color_g": 0,
+            "color_b": 0,
+            "color_a": 0
+        },
+        "color_tertiary": {
+            "color_r": 0,
+            "color_g": 0,
+            "color_b": 0,
+            "color_a": 0
+        },
         "speed_min": 0,
         "speed_max": 0,
         "nozzle_min": 200,
@@ -53,9 +65,19 @@ def read_spool() -> None:
     print(json.dumps(spool_specs, indent=4))
 
 
+def read_spool_raw() -> None:
+    """
+    Spool raw read example
+    """
+    reader: SpoolReader = SpoolReader()
+    spool_data_raw: str = reader.read_spool_raw()
+    print(spool_data_raw)
+
+
 if __name__ == "__main__":
     """
     App init point
     """
-    #write_spool()
-    read_spool()
+    # write_spool()
+    # read_spool()
+    read_spool_raw()

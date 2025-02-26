@@ -134,6 +134,18 @@ class SpoolData(CardData):
         self._write_byte(0x14, 1, spool_specs["color_b"])
         self._write_byte(0x14, 0, spool_specs.get("color_a", 0xff))
 
+        # Additional colors (optional)
+        if "color_secondary" in spool_specs:
+            self._write_byte(0x15, 3, spool_specs["color_secondary"].get("color_r", 0))
+            self._write_byte(0x15, 2, spool_specs["color_secondary"].get("color_g", 0))
+            self._write_byte(0x15, 1, spool_specs["color_secondary"].get("color_b", 0))
+            self._write_byte(0x15, 0, spool_specs["color_secondary"].get("color_a", 0))
+        if "color_tertiary" in spool_specs:
+            self._write_byte(0x16, 3, spool_specs["color_tertiary"].get("color_r", 0))
+            self._write_byte(0x16, 2, spool_specs["color_tertiary"].get("color_g", 0))
+            self._write_byte(0x16, 1, spool_specs["color_tertiary"].get("color_b", 0))
+            self._write_byte(0x16, 0, spool_specs["color_tertiary"].get("color_a", 0))
+
         # Print speed (optional)
         self._write_bytes(0x17, 0, spool_specs.get("speed_min", 0))
         self._write_bytes(0x17, 2, spool_specs.get("speed_max", 0))
@@ -180,6 +192,18 @@ class SpoolData(CardData):
             "color_g": self._read_byte(0x14, 2),
             "color_b": self._read_byte(0x14, 1),
             "color_a": self._read_byte(0x14, 0),
+            "color_secondary": {
+                "color_r": self._read_byte(0x15, 3),
+                "color_g": self._read_byte(0x15, 2),
+                "color_b": self._read_byte(0x15, 1),
+                "color_a": self._read_byte(0x15, 0),
+            },
+            "color_tertiary": {
+                "color_r": self._read_byte(0x16, 3),
+                "color_g": self._read_byte(0x16, 2),
+                "color_b": self._read_byte(0x16, 1),
+                "color_a": self._read_byte(0x16, 0),
+            },
             "speed_min": self._read_bytes(0x17, 0),
             "speed_max": self._read_bytes(0x17, 2),
             "nozzle_min": self._read_bytes(0x18, 0),
@@ -236,6 +260,23 @@ class SpoolReader:
         spool_data: SpoolData = SpoolData()
         spool_data.pages = card_data.pages
         return spool_data.get_spool_specs()
+
+    def read_spool_raw(self) -> Optional[str]:
+        """
+        Wait for a spool, read it and return its raw data (+ interpretation if possible)
+        :return: Raw data of the nfc tag
+        """
+        card_data: Optional[CardData] = self.reader.read_card()
+        if not card_data:
+            return None
+        raw_data: str = card_data.dump()
+        try:
+            spool_data: SpoolData = SpoolData()
+            spool_data.pages = card_data.pages
+            interpretation: str = json.dumps(spool_data.get_spool_specs(), indent=4)
+            return f"{raw_data}\n\n{interpretation}"
+        except:
+            return raw_data
 
     def write_spool(self, spool_specs: dict[str, Any]) -> bool:
         """

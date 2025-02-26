@@ -26,8 +26,7 @@ class CardData:
         pages: list[str] = []
         for page, page_data in enumerate(self.pages):
             hex_data: list[str] = [f"{x:02x}" for x in page_data]
-            ascii_data: str = ''.join([chr(x) for x in page_data])
-            pages.append(f"[Page {page:02x}] {':'.join(hex_data)} - {ascii_data}")
+            pages.append(f"[Page {page:02x}] {':'.join(hex_data)}")
         return "\n".join(pages)
 
 
