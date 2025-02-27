@@ -1,5 +1,6 @@
 import json
 from typing import Any
+from .web_app import start_web_app
 
 from .nfc_manager import SpoolReader
 
@@ -80,4 +81,5 @@ if __name__ == "__main__":
     """
     # write_spool()
     # read_spool()
-    read_spool_raw()
+    # read_spool_raw()
+    start_web_app(8080, debug=True)

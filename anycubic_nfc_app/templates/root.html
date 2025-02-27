@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/head.html' %}
+</head>
+
+<body>
+<div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom">
+        <a href="https://www.youtube.com/@molodos" target="_blank"
+           class="d-flex align-items-center text-body-emphasis text-decoration-none">
+            <img src="/static/images/favicon/favicon.ico" height="32">
+            <span class="fs-4" style="margin-left: 16px;">Anycubic NFC App by Molodos</span>
+        </a>
+    </header>
+
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Configure Spool Data</h1>
+            <p class="col-md-8 fs-4">Use this tool to configure your spool data and write it to a NFC tag for a third
+                party spool in a ACE Pro compatible way.</p>
+
+            <p>TODO: Form for spool data</p>
+
+            <button class="btn btn-outline-dark btn-lg" type="button">Read from NFC Tag</button>
+            <button class="btn btn-dark btn-lg" type="button">Write to NFC Tag</button>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-5 text-bg-dark rounded-3">
+                <h2>Help Researching</h2>
+                <p>Use this tool to create a dump of an original Anycubic spool tag to support the research for this
+                    app. The dump of one of the two spool sides is enough.</p>
+                <p>You can hand in your dumps by sending them via email to <a
+                        href="mailto:anycubic-nfc-research@molodos.com?subject=Anycubic%20NFC%20Tag%20Research&body=Material%20(e.g.%20%22PLA%2B%22)%3A%0AColor%20(e.g.%20%22Pearl%20Black%22)%3A%0AAdditional%20information%3A%0A%0A(please%20don't%20forget%20to%20attach%20the%20dump%20file)">anycubic-nfc-research@molodos.com</a>.
+                    Please include details on which exact spool you scanned (material, color, etc.).</p>
+                <p>Thanks for your support!</p>
+                <button class="btn btn-outline-light" type="button">Create a Spool Dump</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                <h2>Required Hardware</h2>
+                <p>Buy the hardware via the affiliate links below to support this project without additional costs:</p>
+                <ul>
+                    <li>ACR122U NFC reader for reading and writing NFC tags. Get one <a href="https://amzn.to/4h24oZQ"
+                                                                                        target="_blank">here</a></li>
+                    <li>Two NTAG213 NFC tags are needed per spool. Get some <a href="https://amzn.to/4bgO4TR"
+                                                                               target="_blank">here</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% include 'components/foot.html' %}
+</div>
+</body>
+</html>
