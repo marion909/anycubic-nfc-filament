@@ -11,7 +11,7 @@ def write_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
-        "sku": "MOLODOS-PLA",
+        "sku": "MOLODOS-NFC",
         "type": "PLA",
         "color_r": 255,
         "color_g": 0,

@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     {% include 'components/head.html' %}
+    <style id="optionalStyle">
+        .optional {display: none;}
+    </style>
 </head>
 
 <body>
@@ -23,27 +26,12 @@
                 <div class="mb-3">
                     <label for="type" class="form-label">Type</label>
                     <input type="text" class="form-control" id="type" name="type" aria-describedby="typeHelp"
-                           value="PLA" required>
-                    <div id="typeHelp" class="form-text">The following types were already found to be used by Anycubic:
-                        "PLA", "PLA+" and "PLA High Speed"
+                           maxlength="20" value="PLA" required>
+                    <div id="typeHelp" class="form-text">Max 20 characters. The following types were already found to be
+                        used by Anycubic: "PLA", "PLA+" and "PLA High Speed"
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2 mb-3">
-                        <label for="colorPickerA" class="form-label">Color 1</label>
-                        <div id="colorPickerA"></div>
-                        <input type="hidden" id="colorInputA" name="colorA" value="#FF0000" required>
-                    </div>
-                    <div class="col-sm-2 mb-3">
-                        <label for="colorPickerA" class="form-label">Color 2 (Optional)</label>
-                        <div id="colorPickerB"></div>
-                        <input type="hidden" id="colorInputB" name="colorB" value="#00FF00">
-                    </div>
-                    <div class="col-sm-2 mb-3">
-                        <label for="colorPickerA" class="form-label">Color 3 (Optional)</label>
-                        <div id="colorPickerC"></div>
-                        <input type="hidden" id="colorInputC" name="colorC" value="#0000FF">
-                    </div>
                     <div class="col-sm-6 mb-3">
                         <label for="bedMin" class="form-label">Bed Temperature Range (°C)</label>
                         <div class="row">
@@ -55,80 +43,114 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-2 mb-3">
+                        <label for="colorPickerA" class="form-label">Color</label>
+                        <div id="colorPickerA"></div>
+                        <input type="hidden" id="colorInputA" name="colorA" value="#FF0000" required>
+                    </div>
+                    <div class="col-sm-2 mb-3 optional">
+                        <label for="colorPickerA" class="form-label">Color 2 (Optional)</label>
+                        <div id="colorPickerB"></div>
+                        <input type="hidden" id="colorInputB" name="colorB" value="#00FF00">
+                    </div>
+                    <div class="col-sm-2 mb-3 optional">
+                        <label for="colorPickerA" class="form-label">Color 3 (Optional)</label>
+                        <div id="colorPickerC"></div>
+                        <input type="hidden" id="colorInputC" name="colorC" value="#0000FF">
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
-                        <label for="speedMinA" class="form-label">Speed Range 1 (mm/s)</label>
+                    <div class="col-sm-6 mb-3 optional">
+                        <label for="speedMinA" class="form-label">Speed Range (mm/s)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMinA" name="speedMinA" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMinA" name="speedMinA"
+                                       placeholder="(Optional)">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMaxA" name="speedMaxA" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMaxA" name="speedMaxA"
+                                       placeholder="(Optional)">
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="nozzleMinA" class="form-label">Nozzle Temperature Range 1 (°C)</label>
+                        <label for="nozzleMinA" class="form-label">Nozzle Temperature Range (°C)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMinA" name="nozzleMinA" value="200" required>
+                                <input type="number" class="form-control" id="nozzleMinA" name="nozzleMinA" value="200"
+                                       required>
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMaxA" name="nozzleMaxA" value="210" required>
+                                <input type="number" class="form-control" id="nozzleMaxA" name="nozzleMaxA" value="210"
+                                       required>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-6 mb-3 optional">
                         <label for="speedMinB" class="form-label">Speed Range 2 (mm/s)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMinB" name="speedMinB" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMinB" name="speedMinB"
+                                       placeholder="(Optional)">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMaxB" name="speedMaxB" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMaxB" name="speedMaxB"
+                                       placeholder="(Optional)">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-6 mb-3 optional">
                         <label for="nozzleMinB" class="form-label">Nozzle Temperature Range 2 (°C)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMinB" name="nozzleMinB" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="nozzleMinB" name="nozzleMinB"
+                                       placeholder="(Optional)">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMaxB" name="nozzleMaxB" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="nozzleMaxB" name="nozzleMaxB"
+                                       placeholder="(Optional)">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-6 mb-3 optional">
                         <label for="speedMinC" class="form-label">Speed Range 3 (mm/s)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMinC" name="speedMinC" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMinC" name="speedMinC"
+                                       placeholder="(Optional)">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="speedMaxC" name="speedMaxC" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="speedMaxC" name="speedMaxC"
+                                       placeholder="(Optional)">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-6 mb-3 optional">
                         <label for="nozzleMinC" class="form-label">Nozzle Temperature Range 3 (°C)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMinC" name="nozzleMinC" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="nozzleMinC" name="nozzleMinC"
+                                       placeholder="(Optional)">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control" id="nozzleMaxC" name="nozzleMaxC" placeholder="(Optional)">
+                                <input type="number" class="form-control" id="nozzleMaxC" name="nozzleMaxC"
+                                       placeholder="(Optional)">
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="optionalFields">
+                        <label class="form-check-label" for="optionalFields">
+                            Show advanced (optional) form spool data fields
+                        </label>
+                    </div>
+                </div>
                 <button class="btn btn-outline-dark btn-lg" type="button">Read from NFC Tag</button>
                 <button class="btn btn-dark btn-lg" type="button">Write to NFC Tag</button>
             </form>
@@ -164,6 +186,7 @@
 
     {% include 'components/foot.html' %}
     <script src="/static/script/color-picker.js"></script>
+    <script src="/static/script/optional-fields.js"></script>
 </div>
 </body>
 </html>
