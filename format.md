@@ -11,7 +11,7 @@ Dump of the NTAG213 chip of a Pantone Spring Leaf PLA
 [Page 01] d4:72:00:01 (Management data)
 [Page 02] a7:48:00:00 (Management data)
 [Page 03] e1:10:12:00 (Management data)
-[Page 04] 7b:00:64:00 -> Format Version information (64 -> version 1)
+[Page 04] 7b:00:64:00 -> Density (123x10^-2g/cm^3) and format version information (64 -> version 1)
 [Page 05] 48:50:4c:31 -> SKU: HPL19-102 (max length might be longer -> check firmware)
 [Page 06] 39:2d:31:30 -> ^^
 [Page 07] 32:00:00:00 -> ^^
@@ -65,7 +65,7 @@ Dump of the NTAG213 chip of a Bright White PLA+
 [Page 01] 39:98:00:00 (Management data)
 [Page 02] a1:a3:00:00 (Management data)
 [Page 03] e1:10:12:00 (Management data)
-[Page 04] 7b:00:65:00 -> Format Version information (65 -> version 2)
+[Page 04] 7b:00:65:00 -> Density (123x10^-2g/cm^3) and format version information (65 -> version 2)
 [Page 05] 41:48:50:4c -> SKU: AHPLPBW-102 (max length might be longer -> check firmware)
 [Page 06] 50:42:57:2d -> ^^
 [Page 07] 31:30:32:00 -> ^^
@@ -116,7 +116,7 @@ from [this](https://www.reddit.com/r/anycubic/comments/1g047ad/comment/mdz70s9/?
 [Page 01] 39:98:00:00 (Management data)
 [Page 02] a1:a3:00:00 (Management data)
 [Page 03] e1:10:12:00 (Management data)
-[Page 04] 7b:00:65:00 -> Format Version information (65 -> version 2)
+[Page 04] 7e:00:65:00 -> Density (126x10^-2g/cm^3) and format version information (65 -> version 2) TODO: Check if density is real
 [Page 05] 41:48:50:4c -> SKU: AHPLPBW-102 (max length might be longer -> check firmware)
 [Page 06] 50:42:57:2d -> ^^
 [Page 07] 31:30:32:00 -> ^^

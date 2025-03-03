@@ -11,6 +11,7 @@ def write_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
+        "density": 1.24,
         "sku": "MOLODOS-NFC",
         "type": "PLA",
         "color_r": 255,
@@ -80,6 +81,5 @@ if __name__ == "__main__":
     App init point
     """
     # write_spool()
-    # read_spool()
-    # read_spool_raw()
-    start_web_app(8080, debug=True)
+    read_spool_raw()
+    # start_web_app(8080, debug=True)
