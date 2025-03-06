@@ -114,21 +114,14 @@ class SpoolData(CardData):
         :param spool_specs: Spool specs JSON
         """
         # Static
+        self._write_byte(0x04, 0, 0x7b)
         self._set_format_version(2)
-
-        # Density
-        self._write_byte(0x04, 0, round(spool_specs["density"] * 100))
 
         # SKU
         self._write_string(0x05, spool_specs["sku"])
 
         # Type
-        if spool_specs["type"] == "PLA+":
-            self._write_string(0x0f, "PLA+")
-        if spool_specs["type"] == "PLA?High?Speed":
-            self._write_string(0x0f, "PLA?High?Speed")
-        else:
-            self._write_string(0x0f, "PLA")
+        self._write_string(0x0f, spool_specs["type"])
 
         # Color
         self._write_byte(0x14, 3, spool_specs["color_r"])
@@ -188,7 +181,6 @@ class SpoolData(CardData):
         """
         # Read specs
         spool_specs: dict[str, Any] = {
-            "density": self._read_bytes(0x04, 0) / 100,
             "sku": self._read_string(0x05),
             "type": self._read_string(0x0f),
             "color_r": self._read_byte(0x14, 3),

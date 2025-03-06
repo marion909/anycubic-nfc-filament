@@ -11,10 +11,9 @@ def write_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
-        "density": 1.24,
         "sku": "MOLODOS-NFC",
         "type": "PLA",
-        "color_r": 255,
+        "color_r": 0,
         "color_g": 0,
         "color_b": 0,
         "color_a": 255,
@@ -30,21 +29,21 @@ def write_spool() -> None:
             "color_b": 0,
             "color_a": 0
         },
-        "speed_min": 0,
-        "speed_max": 0,
-        "nozzle_min": 200,
+        "speed_min": 50,
+        "speed_max": 150,
+        "nozzle_min": 190,
         "nozzle_max": 210,
         "range_b": {
-            "speed_min": 0,
-            "speed_max": 0,
-            "nozzle_min": 0,
-            "nozzle_max": 0
+            "speed_min": 150,
+            "speed_max": 300,
+            "nozzle_min": 210,
+            "nozzle_max": 230
         },
         "range_c": {
-            "speed_min": 0,
-            "speed_max": 0,
-            "nozzle_min": 0,
-            "nozzle_max": 0
+            "speed_min": 300,
+            "speed_max": 600,
+            "nozzle_min": 230,
+            "nozzle_max": 240
         },
         "bed_min": 50,
         "bed_max": 60,
@@ -80,6 +79,6 @@ if __name__ == "__main__":
     """
     App init point
     """
-    # write_spool()
+    write_spool()
     # read_spool_raw()
-    start_web_app(8080, debug=True)
+    # start_web_app(8080, debug=True)
