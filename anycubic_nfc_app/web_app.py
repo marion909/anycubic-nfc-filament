@@ -5,11 +5,11 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
 
 filament_types: list[str] = [
-    "PLA", "PETG", "TPU",
-    "ABS", "ASA", "PET",
-    "PA", "PC", "PLA-CF",
-    "PA-CF", "PA-GF", "ABS-GF"
+    "PLA", "PETG",
+    "PLA High Speed", "PLA+", "PLA Silk", "PLA Matte",
+    "TPU", "ABS", "ASA", "PLA Luminous"
 ]
+# TODO: Find according SKUs in shop
 
 
 @app.route("/", methods=["GET", "POST"])

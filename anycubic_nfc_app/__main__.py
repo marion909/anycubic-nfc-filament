@@ -1,6 +1,5 @@
 import json
 from typing import Any
-from .web_app import start_web_app
 
 from .nfc_manager import SpoolReader
 
@@ -11,8 +10,8 @@ def write_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
-        "sku": "MOLODOS-NFC",
-        "type": "PLA",
+        "sku": "AHHSBK-102",
+        "type": "PLA High Speed",
         "color_r": 0,
         "color_g": 0,
         "color_b": 0,
