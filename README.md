@@ -21,6 +21,12 @@ The following hardware is needed (buy them via my affiliate links to support thi
 5) Start the tool: `python -m anycubic_nfc_app`
 6) Open the web interface in your browser by entering http://localhost:8080 into the top bar
 
+## FAQ
+
+**Why is the material type not displaying/recognized correctly on my printer?**
+
+Try updating your ACE Pro (you can do that on the top right of the "Workbench" in Anycubic Slicer Next)
+
 ## Credits
 
 Special thanks
