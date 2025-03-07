@@ -161,13 +161,9 @@ from [this](https://www.reddit.com/r/anycubic/comments/1g047ad/comment/mdz70s9/?
 
 ## Dump Types and SKUs
 
-List of found Types:
+Filament types should align with the material names in the slicer after "Anycubic "
 
-- PLA
-- PLA+
-- PLA?High?Speed
-
-List of found SKUs:
+List of actually found SKUs:
 
 - PLA Basic Pantone Peach Fuzz: HPL16-101
 - PLA Basic Pantone Interstellar Violet: HPL17-101
@@ -187,6 +183,14 @@ List of found SKUs:
 - PLA Beige: AHPLLB-103
 - PLA Bright Red: AHPLRR-103
 
-Shop SKUs:
+SKUs (reverse-engineered from shop in shop page source code):
+- PLA Basic Black: AHPLBK-101
+- PLA+ Black: AHPLPBK-102
+- PLA Matte Black: HYGBK-101
+- PLA Silk White: HSCWH-101
 - HS PLA Black: AHHSBK-102
-- 
+- PETG Black: HPEBK-103
+- ASA Black: HASBK-101
+- ABS Black: HABBK-102
+- TPU Black: HTPBK-101
+- PLA Glow Green: HFGBL-101

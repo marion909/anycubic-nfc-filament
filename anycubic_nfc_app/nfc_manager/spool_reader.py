@@ -115,6 +115,7 @@ class SpoolData(CardData):
         """
         # Static
         self._write_byte(0x04, 0, 0x7b)
+        self._write_byte(0x27, 3, 0x4d)  # Custom spool marker
         self._set_format_version(2)
 
         # SKU
@@ -220,6 +221,7 @@ class SpoolData(CardData):
             "diameter": self._read_bytes(0x1e, 0) / 100,
             "length": self._read_bytes(0x1e, 2),
             "weight": self._read_bytes(0x1f, 0),
+            "is_custom": self._read_bytes(0x27, 3) == 0x4d
         }
 
         # Return
