@@ -1,6 +1,7 @@
 import json
 from typing import Any
 
+from .web_app import start_web_app
 from .nfc_manager import SpoolReader
 
 
@@ -12,22 +13,9 @@ def write_spool() -> None:
     spool_specs: dict[str, Any] = {
         "sku": "AHHSBK-102",
         "type": "PLA High Speed",
-        "color_r": 255,
-        "color_g": 255,
-        "color_b": 255,
-        "color_a": 255,
-        "color_secondary": {
-            "color_r": 0,
-            "color_g": 0,
-            "color_b": 0,
-            "color_a": 0
-        },
-        "color_tertiary": {
-            "color_r": 0,
-            "color_g": 0,
-            "color_b": 0,
-            "color_a": 0
-        },
+        "color": "#ff0000",
+        "color_secondary": "",
+        "color_tertiary": "",
         "speed_min": 50,
         "speed_max": 150,
         "nozzle_min": 190,
@@ -78,6 +66,6 @@ if __name__ == "__main__":
     """
     App init point
     """
-    write_spool()
-    read_spool_raw()
-    # start_web_app(8080, debug=True)
+    # write_spool()
+    # read_spool_raw()
+    start_web_app(8080, debug=True)

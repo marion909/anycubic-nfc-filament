@@ -1,3 +1,5 @@
+from typing import Any
+
 from flask import Flask, render_template
 
 # App settings
@@ -23,7 +25,7 @@ def root():
     """
     Root page
     """
-    return render_template("root.html")
+    return render_template("root.html", filament_types=list(filament_skus.keys()))
 
 
 def start_web_app(port: int, debug=False):

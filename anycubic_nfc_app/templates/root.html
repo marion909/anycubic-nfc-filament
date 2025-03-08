@@ -24,14 +24,29 @@
                 party spool in a ACE Pro compatible way.</p>
             <form method="POST">
                 <div class="row">
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-3 mb-3">
                         <label for="type" class="form-label">Type</label>
-                        <input type="text" class="form-control" id="type" name="type" aria-describedby="typeHelp"
-                               maxlength="20" value="PLA" required>
-                        <div id="typeHelp" class="form-text">Max 20 characters. The following types were already found
-                            to be
-                            used by Anycubic: "PLA", "PLA+" and "PLA High Speed"
-                        </div>
+                        <select class="form-select" id="type" name="type" required>
+                            <option value="" selected disabled>&lt;Select filament type&gt;</option>
+                            {% for type in filament_types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-sm-2 mb-3">
+                        <label for="colorPickerA" class="form-label">Color</label>
+                        <div id="colorPickerA"></div>
+                        <input type="hidden" id="colorInputA" name="colorA" required>
+                    </div>
+                    <div class="col-sm-2 mb-3 optional">
+                        <label for="colorPickerB" class="form-label">Color 2 (Optional)</label>
+                        <div id="colorPickerB"></div>
+                        <input type="hidden" id="colorInputB" name="colorB">
+                    </div>
+                    <div class="col-sm-2 mb-3 optional">
+                        <label for="colorPickerC" class="form-label">Color 3 (Optional)</label>
+                        <div id="colorPickerC"></div>
+                        <input type="hidden" id="colorInputC" name="colorC">
                     </div>
                 </div>
                 <div class="row">
@@ -47,21 +62,6 @@
                                        required>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-2 mb-3">
-                        <label for="colorPickerA" class="form-label">Color</label>
-                        <div id="colorPickerA"></div>
-                        <input type="hidden" id="colorInputA" name="colorA" value="#FF0000" required>
-                    </div>
-                    <div class="col-sm-2 mb-3 optional">
-                        <label for="colorPickerB" class="form-label">Color 2 (Optional)</label>
-                        <div id="colorPickerB"></div>
-                        <input type="hidden" id="colorInputB" name="colorB" value="#00FF00">
-                    </div>
-                    <div class="col-sm-2 mb-3 optional">
-                        <label for="colorPickerC" class="form-label">Color 3 (Optional)</label>
-                        <div id="colorPickerC"></div>
-                        <input type="hidden" id="colorInputC" name="colorC" value="#0000FF">
                     </div>
                 </div>
                 <div class="row">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <button class="btn btn-outline-dark btn-lg" type="button">Read from NFC Tag</button>
-                <button class="btn btn-dark btn-lg" type="button">Write to NFC Tag</button>
+                <button class="btn btn-dark btn-lg" type="submit">Write to NFC Tag</button>
             </form>
         </div>
     </div>

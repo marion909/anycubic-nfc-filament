@@ -50,6 +50,6 @@ function initColorPicker(pickerId, inputId, hexColor) {
     });
 }
 
-initColorPicker("colorPickerA", "colorInputA", "#FF0000");
-initColorPicker("colorPickerB", "colorInputB", "#00FF00");
-initColorPicker("colorPickerC", "colorInputC", "#0000FF");
+initColorPicker("colorPickerA", "colorInputA", "#E10600");
+initColorPicker("colorPickerB", "colorInputB", "#75CB5D");
+initColorPicker("colorPickerC", "colorInputC", "#23A3C7");

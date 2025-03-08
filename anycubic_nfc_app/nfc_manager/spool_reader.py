@@ -67,6 +67,36 @@ class SpoolData(CardData):
             high_byte = self._read_byte(page, index + 1)
         return high_byte * 256 + low_byte
 
+    def _write_color(self, page: int, hex_color: str) -> None:
+        """
+        Write a hex color (abgr)
+        :param page: Page in the data
+        :param hex_color: The hex color to write (with #)
+        """
+        if not hex_color:
+            return
+        hex_color = hex_color.lstrip('#')
+        r, g, b = tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+        self._write_byte(page, 0, 255)
+        self._write_byte(page, 1, b)
+        self._write_byte(page, 2, g)
+        self._write_byte(page, 3, r)
+
+    def _read_color(self, page: int) -> str:
+        """
+        Read a color (abgr)
+        :param page: Page in the data
+        :return: The hex color code
+        """
+        a = self._read_byte(page, 0)
+        b = self._read_byte(page, 1)
+        g = self._read_byte(page, 2)
+        r = self._read_byte(page, 3)
+        color: str = f"#{r:02x}{g:02x}{b:02x}"
+        if color == "#000000" and a == 0:
+            return ""
+        return color
+
     def _write_string(self, page: int, data: str) -> None:
         """
         Write a string (max 20 characters)
@@ -125,22 +155,11 @@ class SpoolData(CardData):
         self._write_string(0x0f, spool_specs["type"])
 
         # Color
-        self._write_byte(0x14, 3, spool_specs["color_r"])
-        self._write_byte(0x14, 2, spool_specs["color_g"])
-        self._write_byte(0x14, 1, spool_specs["color_b"])
-        self._write_byte(0x14, 0, spool_specs.get("color_a", 0xff))
+        self._write_color(0x14, spool_specs.get("color", ""))
 
         # Additional colors (optional)
-        if "color_secondary" in spool_specs:
-            self._write_byte(0x15, 3, spool_specs["color_secondary"].get("color_r", 0))
-            self._write_byte(0x15, 2, spool_specs["color_secondary"].get("color_g", 0))
-            self._write_byte(0x15, 1, spool_specs["color_secondary"].get("color_b", 0))
-            self._write_byte(0x15, 0, spool_specs["color_secondary"].get("color_a", 0))
-        if "color_tertiary" in spool_specs:
-            self._write_byte(0x16, 3, spool_specs["color_tertiary"].get("color_r", 0))
-            self._write_byte(0x16, 2, spool_specs["color_tertiary"].get("color_g", 0))
-            self._write_byte(0x16, 1, spool_specs["color_tertiary"].get("color_b", 0))
-            self._write_byte(0x16, 0, spool_specs["color_tertiary"].get("color_a", 0))
+        self._write_color(0x15, spool_specs.get("color_secondary", ""))
+        self._write_color(0x16, spool_specs.get("color_tertiary", ""))
 
         # Print speed (optional)
         self._write_bytes(0x17, 0, spool_specs.get("speed_min", 0))
@@ -184,22 +203,9 @@ class SpoolData(CardData):
         spool_specs: dict[str, Any] = {
             "sku": self._read_string(0x05),
             "type": self._read_string(0x0f),
-            "color_r": self._read_byte(0x14, 3),
-            "color_g": self._read_byte(0x14, 2),
-            "color_b": self._read_byte(0x14, 1),
-            "color_a": self._read_byte(0x14, 0),
-            "color_secondary": {
-                "color_r": self._read_byte(0x15, 3),
-                "color_g": self._read_byte(0x15, 2),
-                "color_b": self._read_byte(0x15, 1),
-                "color_a": self._read_byte(0x15, 0),
-            },
-            "color_tertiary": {
-                "color_r": self._read_byte(0x16, 3),
-                "color_g": self._read_byte(0x16, 2),
-                "color_b": self._read_byte(0x16, 1),
-                "color_a": self._read_byte(0x16, 0),
-            },
+            "color": self._read_color(0x14),
+            "color_secondary": self._read_color(0x15),
+            "color_tertiary": self._read_color(0x16),
             "speed_min": self._read_bytes(0x17, 0),
             "speed_max": self._read_bytes(0x17, 2),
             "nozzle_min": self._read_bytes(0x18, 0),
