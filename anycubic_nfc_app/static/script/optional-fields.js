@@ -1,17 +1,13 @@
-function toggleOptional(enabled) {
-    if(enabled) {
+function updateOptional() {
+    if(document.getElementById('optionalFields').checked) {
         document.getElementById("optionalStyle").innerHTML = "";
     } else {
         document.getElementById("optionalStyle").innerHTML = ".optional {display: none;}";
     }
 }
 
-const changeCheckbox = document.getElementById('optionalFields')
+updateOptional();
 
-changeCheckbox.addEventListener('change', (event) => {
-  if (event.currentTarget.checked) {
-    toggleOptional(true);
-  } else {
-    toggleOptional(false);
-  }
+document.getElementById('optionalFields').addEventListener('change', (event) => {
+    updateOptional();
 })
