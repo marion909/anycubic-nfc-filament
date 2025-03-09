@@ -7,7 +7,7 @@ A tool to create NFC tags compatible with the Anycubic ACE Pro for third party f
 The following hardware is needed (buy them via my affiliate links to support this project without additional costs):
 
 - ACR122U NFC reader. Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
-- NTAG213 NFC stickers. Buy some [here](https://amzn.to/4bgO4TR) (affiliate link)
+- NTAG213 NFC stickers. Buy some [here](https://amzn.to/4kzatQm) (affiliate link)
 
 *Note: You will need two NFC stickers per spool of filament.*
 

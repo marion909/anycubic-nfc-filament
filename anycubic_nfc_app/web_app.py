@@ -12,10 +12,12 @@ filament_presets: dict[str, dict[str, Any]] = {
     "PLA High Speed": {
         "type": "PLA High Speed",
         "color": "#e10600",
-        "speed_min": 50,
-        "speed_max": 150,
-        "nozzle_min": 190,
-        "nozzle_max": 210,
+        "range_a": {
+            "speed_min": 50,
+            "speed_max": 150,
+            "nozzle_min": 190,
+            "nozzle_max": 210
+        },
         "range_b": {
             "speed_min": 150,
             "speed_max": 300,
@@ -37,8 +39,10 @@ filament_presets: dict[str, dict[str, Any]] = {
     "PLA": {
         "type": "PLA",
         "color": "#e10600",
-        "nozzle_min": 200,
-        "nozzle_max": 210,
+        "range_a": {
+            "nozzle_min": 200,
+            "nozzle_max": 210
+        },
         "bed_min": 50,
         "bed_max": 60,
         "diameter": 1.75,

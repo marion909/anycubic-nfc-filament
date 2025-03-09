@@ -13,10 +13,12 @@ def write_spool() -> None:
     spool_specs: dict[str, Any] = {
         "type": "PLA High Speed",
         "color": "#000000",
-        "speed_min": 50,
-        "speed_max": 150,
-        "nozzle_min": 190,
-        "nozzle_max": 210,
+        "range_a": {
+            "speed_min": 50,
+            "speed_max": 150,
+            "nozzle_min": 190,
+            "nozzle_max": 210
+        },
         "range_b": {
             "speed_min": 150,
             "speed_max": 300,

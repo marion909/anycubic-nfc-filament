@@ -186,15 +186,15 @@ class SpoolData(CardData):
         self._write_string(0x0f, spool_specs["type"])
 
         # Color
-        self._write_color(0x14, spool_specs.get("color", ""))
+        self._write_color(0x14, spool_specs["color"])
 
         # Print speed (optional)
-        self._write_bytes(0x17, 0, spool_specs.get("speed_min", 0))
-        self._write_bytes(0x17, 2, spool_specs.get("speed_max", 0))
+        self._write_bytes(0x17, 0, spool_specs["range_a"].get("speed_min", 0))
+        self._write_bytes(0x17, 2, spool_specs["range_a"].get("speed_max", 0))
 
         # Nozzle temp
-        self._write_bytes(0x18, 0, spool_specs["nozzle_min"])
-        self._write_bytes(0x18, 2, spool_specs["nozzle_max"])
+        self._write_bytes(0x18, 0, spool_specs["range_a"]["nozzle_min"])
+        self._write_bytes(0x18, 2, spool_specs["range_a"]["nozzle_max"])
 
         # Additional print speed ranges (optional)
         if "range_b" in spool_specs:
@@ -243,10 +243,12 @@ class SpoolData(CardData):
         spool_specs: dict[str, Any] = {
             "type": sku_type,
             "color": self._read_color(0x14),
-            "speed_min": self._read_bytes(0x17, 0),
-            "speed_max": self._read_bytes(0x17, 2),
-            "nozzle_min": self._read_bytes(0x18, 0),
-            "nozzle_max": self._read_bytes(0x18, 2),
+            "range_a": {
+                "speed_min": self._read_bytes(0x17, 0),
+                "speed_max": self._read_bytes(0x17, 2),
+                "nozzle_min": self._read_bytes(0x18, 0),
+                "nozzle_max": self._read_bytes(0x18, 2),
+            },
             "range_b": {
                 "speed_min": self._read_bytes(0x19, 0),
                 "speed_max": self._read_bytes(0x19, 2),
