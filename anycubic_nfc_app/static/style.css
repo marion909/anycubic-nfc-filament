@@ -1,3 +1,11 @@
 .pcr-save {
     padding: 5.4px 24px !important;
 }
+
+.pickr .pcr-button::after {
+    border-radius: 0.375rem;
+}
+
+.pickr .pcr-button::before {
+    border-radius: 0.375rem;
+}

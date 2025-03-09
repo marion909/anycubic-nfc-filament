@@ -65,6 +65,6 @@ if __name__ == "__main__":
     """
     App init point
     """
-    write_spool()
-    read_spool_raw()
-    # start_web_app(8080, debug=True)
+    # write_spool()
+    # read_spool_raw()
+    start_web_app(8080, debug=True)
