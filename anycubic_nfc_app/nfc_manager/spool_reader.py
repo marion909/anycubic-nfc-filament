@@ -9,6 +9,31 @@ class SpoolData(CardData):
     Spool data
     """
 
+    SKUS: dict[str, str] = {
+        "PLA": "AHPLBK-101",
+        "PLA+": "AHPLPBK-102",
+        "PLA Matte": "HYGBK-101",
+        "PLA Silk": "HSCWH-101",
+        "PLA High Speed": "AHHSBK-102",
+        "PETG": "HPEBK-103",
+        "ASA": "HASBK-101",
+        "ABS": "HABBK-102",
+        "TPU": "HTPBK-101",
+        "PLA Luminous": "HFGBL-101"
+    }
+    SKU_PREFIXES: dict[str, str] = {
+        "AHPL": "PLA",
+        "AHPLP": "PLA+",
+        "HYG": "PLA Matte",
+        "HSC": "PLA Silk",
+        "AHHS": "PLA High Speed",
+        "HPE": "PETG",
+        "HAS": "ASA",
+        "HAB": "ABS",
+        "HTP": "TPU",
+        "HFG": "PLA Luminous"
+    }
+
     def __init__(self, spool_specs: Optional[dict[str, Any]] = None):
         """
         Create a spool data object
@@ -17,6 +42,14 @@ class SpoolData(CardData):
         super().__init__(page_count=0x2d)
         if spool_specs:
             self.set_spool_specs(spool_specs)
+
+    @classmethod
+    def get_available_filament_types(cls) -> list[str]:
+        """
+        Get a list of available filament types
+        :return: List of filament types
+        """
+        return list(cls.SKUS.keys())
 
     def _write_byte(self, page: int, index: int, data: int) -> None:
         """
@@ -148,10 +181,8 @@ class SpoolData(CardData):
         self._write_byte(0x27, 3, 0x4d)  # Custom spool marker
         self._set_format_version(2)
 
-        # SKU
-        self._write_string(0x05, spool_specs["sku"])
-
-        # Type
+        # SKU and type
+        self._write_string(0x05, self.SKUS.get(spool_specs["type"], "AHPLBK-101"))
         self._write_string(0x0f, spool_specs["type"])
 
         # Color
@@ -199,10 +230,22 @@ class SpoolData(CardData):
         Get the spool specs data
         :return: Spool specs JSON
         """
+        # Read sku and calculate type from the longest matching prefix
+        sku: str = self._read_string(0x05)
+        possible_prefixes: list[str] = []
+        for p in self.SKU_PREFIXES.keys():
+            if sku.startswith(p):
+                possible_prefixes.append(p)
+        possible_prefixes.sort(key=len, reverse=True)
+        read_type: str = self._read_string(0x0f)
+        sku_type: str = self.SKU_PREFIXES[possible_prefixes[0]] if possible_prefixes else read_type
+        possible_types: list[str] = self.get_available_filament_types()
+        if sku_type not in possible_types:
+            sku_type = possible_types[0]
+
         # Read specs
         spool_specs: dict[str, Any] = {
-            "sku": self._read_string(0x05),
-            "type": self._read_string(0x0f),
+            "type": sku_type,
             "color": self._read_color(0x14),
             "color_secondary": self._read_color(0x15),
             "color_tertiary": self._read_color(0x16),
@@ -227,7 +270,11 @@ class SpoolData(CardData):
             "diameter": self._read_bytes(0x1e, 0) / 100,
             "length": self._read_bytes(0x1e, 2),
             "weight": self._read_bytes(0x1f, 0),
-            "is_custom": self._read_bytes(0x27, 3) == 0x4d
+            "raw": {  # Raw data for research purposes
+                "sku": sku,
+                "type": read_type,
+                "is_custom": self._read_bytes(0x27, 3) == 0x4d
+            },
         }
 
         # Return
@@ -251,6 +298,14 @@ class SpoolReader:
         Initialize card reader
         """
         self.reader: ACR122U = ACR122U()
+
+    @classmethod
+    def get_available_filament_types(cls) -> list[str]:
+        """
+        Get a list of available filament types
+        :return: List of filament types
+        """
+        return SpoolData.get_available_filament_types()
 
     def read_spool(self) -> Optional[dict[str, Any]]:
         """

@@ -11,11 +11,10 @@ def write_spool() -> None:
     """
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
-        "sku": "AHHSBK-102",
         "type": "PLA High Speed",
         "color": "#ff0000",
-        "color_secondary": "",
-        "color_tertiary": "",
+        "color_secondary": "#00ff00",
+        "color_tertiary": "#0000ff",
         "speed_min": 50,
         "speed_max": 150,
         "nozzle_min": 190,
@@ -66,6 +65,6 @@ if __name__ == "__main__":
     """
     App init point
     """
-    # write_spool()
-    # read_spool_raw()
-    start_web_app(8080, debug=True)
+    write_spool()
+    read_spool_raw()
+    # start_web_app(8080, debug=True)
