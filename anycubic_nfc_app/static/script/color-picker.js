@@ -47,9 +47,8 @@ function initColorPicker(pickerId, inputId, hexColor) {
     // Update hidden input on color change
     pickr.on('save', (color) => {
         document.getElementById(inputId).value = color.toHEXA().toString();
+        pickr.hide();
     });
 }
 
-initColorPicker("colorPickerA", "colorInputA", "#E10600");
-initColorPicker("colorPickerB", "colorInputB", "#75CB5D");
-initColorPicker("colorPickerC", "colorInputC", "#23A3C7");
+initColorPicker("colorPicker", "colorInput", "#E10600");

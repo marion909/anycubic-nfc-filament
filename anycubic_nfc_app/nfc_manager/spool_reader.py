@@ -11,22 +11,22 @@ class SpoolData(CardData):
 
     SKUS: dict[str, str] = {
         "PLA": "AHPLBK-101",
-        "PLA+": "AHPLPBK-102",
-        "PLA Matte": "HYGBK-101",
-        "PLA Silk": "HSCWH-101",
+        "PLA+": "AHPLPBK-102",  # Material name not recognized by slicer (recognized as PLA)
         "PLA High Speed": "AHHSBK-102",
-        "PETG": "HPEBK-103",
-        "ASA": "HASBK-101",
-        "ABS": "HABBK-102",
-        "TPU": "HTPBK-101",
-        "PLA Luminous": "HFGBL-101"
+        "PLA Matte": "HYGBK-101",  # SKU not recognized by slicer
+        "PLA Silk": "HSCWH-101",  # SKU not recognized by slicer
+        "PETG": "HPEBK-103",  # SKU not recognized by slicer
+        "ASA": "HASBK-101",  # SKU not recognized by slicer
+        "ABS": "HABBK-102",  # SKU not recognized by slicer
+        "TPU": "HTPBK-101",  # SKU not recognized by slicer
+        "PLA Luminous": "HFGBL-101"  # SKU not recognized by slicer
     }
     SKU_PREFIXES: dict[str, str] = {
         "AHPL": "PLA",
         "AHPLP": "PLA+",
+        "AHHS": "PLA High Speed",
         "HYG": "PLA Matte",
         "HSC": "PLA Silk",
-        "AHHS": "PLA High Speed",
         "HPE": "PETG",
         "HAS": "ASA",
         "HAB": "ABS",
@@ -188,10 +188,6 @@ class SpoolData(CardData):
         # Color
         self._write_color(0x14, spool_specs.get("color", ""))
 
-        # Additional colors (optional)
-        self._write_color(0x15, spool_specs.get("color_secondary", ""))
-        self._write_color(0x16, spool_specs.get("color_tertiary", ""))
-
         # Print speed (optional)
         self._write_bytes(0x17, 0, spool_specs.get("speed_min", 0))
         self._write_bytes(0x17, 2, spool_specs.get("speed_max", 0))
@@ -247,8 +243,6 @@ class SpoolData(CardData):
         spool_specs: dict[str, Any] = {
             "type": sku_type,
             "color": self._read_color(0x14),
-            "color_secondary": self._read_color(0x15),
-            "color_tertiary": self._read_color(0x16),
             "speed_min": self._read_bytes(0x17, 0),
             "speed_max": self._read_bytes(0x17, 2),
             "nozzle_min": self._read_bytes(0x18, 0),

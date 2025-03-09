@@ -12,9 +12,7 @@ def write_spool() -> None:
     reader: SpoolReader = SpoolReader()
     spool_specs: dict[str, Any] = {
         "type": "PLA High Speed",
-        "color": "#ff0000",
-        "color_secondary": "#00ff00",
-        "color_tertiary": "#0000ff",
+        "color": "#000000",
         "speed_min": 50,
         "speed_max": 150,
         "nozzle_min": 190,

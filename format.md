@@ -161,9 +161,14 @@ from [this](https://www.reddit.com/r/anycubic/comments/1g047ad/comment/mdz70s9/?
 
 ## Dump Types and SKUs
 
-Filament types should align with the material names in the slicer after "Anycubic "
+> Filament types (names) should align with the material names in the slicer after "Anycubic ". This leads to the right
+> filament being recognized when syncing with the ACE Pro in the "Prepare" tab.
 
-List of actually found SKUs:
+> Filament SKUs are less important. They are used to display the right filament in the "Workbench" tab. Somehow, tha
+> Anycubic Slicer Next uses the SKU to calculate the matching filament type to display there. The color is not important
+> as long as the SKU matches the type.
+
+List of actually found SKUs on official RFID tags:
 
 - PLA Basic Pantone Peach Fuzz: HPL16-101
 - PLA Basic Pantone Interstellar Violet: HPL17-101
@@ -183,7 +188,8 @@ List of actually found SKUs:
 - PLA Beige: AHPLLB-103
 - PLA Bright Red: AHPLRR-103
 
-SKUs (reverse-engineered from shop in shop page source code):
+SKUs for filament types (reverse-engineered from Anycubic shop in HMTL source code):
+
 - PLA Basic Black: AHPLBK-101
 - PLA+ Black: AHPLPBK-102
 - PLA Matte Black: HYGBK-101
