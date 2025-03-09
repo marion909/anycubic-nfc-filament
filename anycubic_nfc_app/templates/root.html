@@ -27,7 +27,7 @@
                     <div class="col-sm-3 mb-3">
                         <label for="type" class="form-label">Filament Type</label>
                         <select class="form-select" id="type" name="type" aria-describedby="typeHelp" required>
-                            <option value="" selected disabled>&lt;Select filament type&gt;</option>
+                            <option value="" selected disabled>(Select filament type)</option>
                             {% for type in filament_types %}
                                 <option value="{{ type }}">{{ type }}</option>
                             {% endfor %}
@@ -45,12 +45,12 @@
                         <label for="bedMin" class="form-label">Bed Temperature Range (°C)</label>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="number" min="0" class="form-control" id="bedMin" name="bedMin" value="50"
-                                       required>
+                                <input type="number" min="0" class="form-control" id="bedMin" name="bedMin"
+                                       placeholder="Min bed temp" required>
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" min="0" class="form-control" id="bedMax" name="bedMax" value="60"
-                                       required>
+                                <input type="number" min="0" class="form-control" id="bedMax" name="bedMax"
+                                       placeholder="Max bed temp" required>
                             </div>
                         </div>
                     </div>
@@ -74,11 +74,11 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <input type="number" min="0" class="form-control" id="nozzleMinA" name="nozzleMinA"
-                                       value="200" required>
+                                       placeholder="Min nozzle temp" required>
                             </div>
                             <div class="col-sm-6">
                                 <input type="number" min="0" class="form-control" id="nozzleMaxA" name="nozzleMaxA"
-                                       value="210" required>
+                                       placeholder="Max nozzle temp" required>
                             </div>
                         </div>
                     </div>
@@ -183,6 +183,10 @@
     {% include 'components/foot.html' %}
     <script src="/static/script/color-picker.js"></script>
     <script src="/static/script/optional-fields.js"></script>
+    <script src="/static/script/presets.js"></script>
+    <script>
+       updatePresets({{ filament_presets | tojson }});
+    </script>
 </div>
 </body>
 </html>
