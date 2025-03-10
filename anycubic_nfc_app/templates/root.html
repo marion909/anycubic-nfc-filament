@@ -5,16 +5,20 @@
     <style id="optionalStyle">
         .optional {display: none;}
     </style>
+    <style id="connectionDotStyle">
+        #connectionDot {background-color: #ed143d;}
+    </style>
 </head>
 
 <body>
 <div class="container py-4">
-    <header class="pb-3 mb-4 border-bottom">
+    <header class="pb-3 mb-4 border-bottom d-flex justify-content-between  justify-content-center">
         <a href="https://www.youtube.com/@molodos" target="_blank"
            class="d-flex align-items-center text-body-emphasis text-decoration-none">
             <img src="/static/images/favicon/favicon.ico" height="32">
             <span class="fs-4" style="margin-left: 16px;">Anycubic NFC App by Molodos</span>
         </a>
+        <span class="fs-5" style="align-content: end;"><span id="connectionDot"></span>NFC Reader <span id="connectionState">Disconnected</span></span>
     </header>
 
     <div class="p-5 mb-4 bg-secondary-subtle border rounded-3">
@@ -183,6 +187,7 @@
     {% include 'components/foot.html' %}
     <script src="/static/script/color-picker.js"></script>
     <script src="/static/script/optional-fields.js"></script>
+    <script src="/static/script/websocket.js"></script>
     <script src="/static/script/presets.js"></script>
     <script>
        updatePresets({{ filament_presets | tojson }});

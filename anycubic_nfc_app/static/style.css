@@ -9,3 +9,12 @@
 .pickr .pcr-button::before {
     border-radius: 0.375rem;
 }
+
+#connectionDot {
+    background-color: #4caf50;
+    border-radius: 100px;
+    aspect-ratio: 1;
+    width: 18px;
+    display: inline-block;
+    margin-right: 8px;
+}
