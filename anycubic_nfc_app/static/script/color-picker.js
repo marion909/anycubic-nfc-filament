@@ -52,7 +52,7 @@ pickr.on('save', (color) => {
 
 function setColor(hexColor) {
     pickr.setColor(hexColor, false);
-    colorInput.value = color.toHEXA().toString();
+    colorInput.value = pickr.getColor().toHEXA().toString();
 }
 
 setColor("#E10600");

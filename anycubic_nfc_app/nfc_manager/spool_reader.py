@@ -295,6 +295,13 @@ class SpoolReader:
         """
         self.reader: ACR122U = ACR122U()
 
+    def get_connection_state(self) -> bool:
+        """
+        Get the current connection state
+        :return: True if connected else False
+        """
+        return self.reader.reader is not None
+
     @classmethod
     def get_available_filament_types(cls) -> list[str]:
         """

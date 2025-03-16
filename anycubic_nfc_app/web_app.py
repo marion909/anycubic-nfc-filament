@@ -1,12 +1,14 @@
 from typing import Any
 
 from flask import Flask, render_template
+from flask_socketio import SocketIO
 
 from .nfc_manager import SpoolReader
 
 # App settings
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
+socketio = SocketIO(app)
 
 filament_presets: dict[str, dict[str, Any]] = {
     "PLA": {
@@ -145,6 +147,8 @@ filament_presets: dict[str, dict[str, Any]] = {
     },
 }
 
+spool_reader: SpoolReader = SpoolReader()
+
 
 @app.route("/", methods=["GET", "POST"])
 def root():
@@ -155,10 +159,18 @@ def root():
                            filament_types=SpoolReader.get_available_filament_types())
 
 
+@socketio.on("ping")
+def get_connection_state():
+    socketio.emit("nfc_state", {
+        "reader_connected": spool_reader.get_connection_state()
+    })
+
+
 def start_web_app(port: int, debug=False):
     """
     Init point of the web app
     :param port: The server port
     :param debug: Debugging mode for auto reload
     """
-    app.run(port=port, host="0.0.0.0", debug=debug)
+    # Start web app
+    socketio.run(app, port=port, host="0.0.0.0")

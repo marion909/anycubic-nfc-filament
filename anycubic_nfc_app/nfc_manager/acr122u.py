@@ -1,3 +1,4 @@
+import threading
 import time
 from typing import List, Optional
 
@@ -39,17 +40,30 @@ class ACR122U:
         """
         Create an instance
         """
-        self.reader: Reader = self._get_reader()
+        self.reader: Optional[Reader] = self._get_reader()
+        checker_thread = threading.Thread(target=self.update_connection_state)
+        checker_thread.daemon = True
+        checker_thread.start()
+
+    def update_connection_state(self) -> None:
+        """
+        Update the connection state
+        """
+        while True:
+            new_reader: Optional[Reader] = self._get_reader()
+            if str(self.reader) != str(new_reader):
+                self.reader = new_reader
+            time.sleep(1)
 
     @classmethod
-    def _get_reader(cls) -> Reader:
+    def _get_reader(cls) -> Optional[Reader]:
         """
         Get a connection to the reader device
         :return: Reader connection
         """
         available_readers: list[Reader] = readers()
         if not available_readers:
-            raise Exception("No NFC reader found")
+            return None
         return available_readers[0]
 
     @classmethod
@@ -83,11 +97,13 @@ class ACR122U:
         else:
             return False
 
-    def _wait_for_card(self) -> CardConnection:
+    def _wait_for_card(self) -> Optional[CardConnection]:
         """
         Wait for a card to be found
-        :return: The connection to the card
+        :return: The connection to the card (if possible)
         """
+        if not self.reader:
+            return None
         connection: CardConnection = self.reader.createConnection()
         while True:
             try:
@@ -103,6 +119,8 @@ class ACR122U:
         :return: The data of the card on success else None
         """
         connection: CardConnection = self._wait_for_card()
+        if not connection:
+            return None
         data: CardData = CardData(page_count)
         for page in range(0, page_count):
             d: bytes = self._read_page(connection, page)
@@ -121,6 +139,8 @@ class ACR122U:
         :return: Success state
         """
         connection: CardConnection = self._wait_for_card()
+        if not connection:
+            return False
         for page, page_data in enumerate(card_data.pages):
             # Don't write to management data pages
             if 0x03 < page < page_count - 5:

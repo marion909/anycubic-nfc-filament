@@ -1,4 +1,6 @@
-function setConnectionState(connected) {
+const socket = io();
+
+function updateConnectionState(connected) {
     if(connected) {
         document.getElementById("connectionDotStyle").innerHTML = "";
         document.getElementById("connectionState").innerHTML = "Connected";
@@ -8,4 +10,22 @@ function setConnectionState(connected) {
     }
 }
 
-// loadFilamentData(jsonData)
+function readTag() {
+    // loadFilamentData(jsonData)
+}
+
+function writeTag() {
+
+}
+
+socket.on("nfc_state", (data) => {
+    updateConnectionState(data.reader_connected);
+});
+
+socket.on("disconnect", (data) => {
+    updateConnectionState(false);
+})
+
+setInterval(() => {
+    socket.emit("ping");
+}, 1000);
