@@ -10,7 +10,7 @@
     </style>
 </head>
 
-<body>
+<body id="body">
 <div class="container py-4">
     <header class="pb-3 mb-4 border-bottom d-flex justify-content-between  justify-content-center">
         <a href="https://www.youtube.com/@molodos" target="_blank"
@@ -18,7 +18,8 @@
             <img src="/static/images/favicon/favicon.ico" height="32">
             <span class="fs-4" style="margin-left: 16px;">Anycubic NFC App by Molodos</span>
         </a>
-        <span class="fs-5" style="align-content: end;"><span id="connectionDot"></span>NFC Reader <span id="connectionState">Disconnected</span></span>
+        <span class="fs-5" style="align-content: end;"><span id="connectionDot"></span>NFC Reader <span
+                id="connectionState">Disconnected</span></span>
     </header>
 
     <div class="p-5 mb-4 bg-secondary-subtle border rounded-3">
@@ -33,10 +34,12 @@
                         <select class="form-select" id="type" name="type" aria-describedby="typeHelp" required>
                             <option value="" selected disabled>(Select filament type)</option>
                             {% for type in filament_types %}
-                                <option value="{{ type }}">{{ type }}</option>
+                            <option value="{{ type }}">{{ type }}</option>
                             {% endfor %}
                         </select>
-                        <div id="typeHelp" class="form-text fs-6">Changing the type will update the temperature and speed presets below</div>
+                        <div id="typeHelp" class="form-text fs-6">Changing the type will update the temperature and
+                            speed presets below
+                        </div>
                     </div>
                     <div class="col-sm-2 mb-3">
                         <label class="form-label">Color</label>
@@ -145,13 +148,16 @@
                 </div>
                 <div class="mb-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" name="showOptional" id="optionalFields">
+                        <input class="form-check-input" type="checkbox" value="" name="showOptional"
+                               id="optionalFields">
                         <label class="form-check-label" for="optionalFields">
                             Show advanced spool data fields (optional)
                         </label>
                     </div>
                 </div>
-                <button class="btn btn-outline-dark btn-lg mt-2 me-2" type="button" onclick="readTag()">Read from NFC Tag</button>
+                <button class="btn btn-outline-dark btn-lg mt-2 me-2" type="button" onclick="readTag()">Read from NFC
+                    Tag
+                </button>
                 <button class="btn btn-dark btn-lg mt-2" type="button" onclick="writeTag()">Write to NFC Tag</button>
             </form>
         </div>
@@ -189,9 +195,23 @@
     <script src="/static/script/color-picker.js"></script>
     <script src="/static/script/presets.js"></script>
     <script>
-       updatePresets({{ filament_presets | tojson }});
+        updatePresets({{ filament_presets | tojson }});
     </script>
     <script src="/static/script/websocket.js"></script>
+</div>
+
+<div class="backdrop" id="backdrop" style="display: none;">
+    <div class="p-5 bg-secondary-subtle border rounded-3 nfc-overlay">
+        <img src="/static/images/nfc.png" style="width: 125px; height: 125px;">
+        <div class="nfc-text">
+            <h2>Waiting for NFC Tag...</h2>
+            <p class="fs-5">Please lay the NFC tag on the scanner. Make sure to not move it away until this prompt
+                closes automatically.</p>
+            <p class="fs-6 nfc-error" id="nfcError" style="display: none">An error occurred. Please remove the tag, wait
+                for the scanner light to turn red try again!</p>
+            <button class="btn btn-outline-dark" type="button" onclick="cancelNFC()">Cancel</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

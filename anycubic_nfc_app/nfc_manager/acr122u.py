@@ -40,6 +40,7 @@ class ACR122U:
         """
         Create an instance
         """
+        self.waiting_for_tag: bool = False
         self.reader: Optional[Reader] = self._get_reader()
         checker_thread = threading.Thread(target=self.update_connection_state)
         checker_thread.daemon = True
@@ -105,9 +106,11 @@ class ACR122U:
         if not self.reader:
             return None
         connection: CardConnection = self.reader.createConnection()
-        while True:
+        self.waiting_for_tag = True
+        while self.waiting_for_tag:
             try:
                 connection.connect()
+                self.waiting_for_tag = False
                 return connection
             except Exception:
                 time.sleep(0.5)
@@ -126,6 +129,7 @@ class ACR122U:
             d: bytes = self._read_page(connection, page)
             if d is None:
                 print(f"[Error] Failed to read page {page}. Reading cancelled.")
+                time.sleep(3)
                 return None
             else:
                 data.pages[page] = d

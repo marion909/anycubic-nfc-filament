@@ -1,6 +1,10 @@
-from typing import Any
+import eventlet
 
-from flask import Flask, render_template
+eventlet.monkey_patch()
+
+from typing import Any, Optional
+
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 
 from .nfc_manager import SpoolReader
@@ -160,10 +164,52 @@ def root():
 
 
 @socketio.on("ping")
-def get_connection_state():
+def handle_ping():
+    """
+    Handle a ping from the client
+    """
     socketio.emit("nfc_state", {
         "reader_connected": spool_reader.get_connection_state()
     })
+
+
+@socketio.on("cancel_nfc")
+def cancel_nfc():
+    """
+    Cancel the current nfc action
+    """
+    spool_reader.cancel_wait_for_tag()
+    socketio.emit("canceled")
+
+
+@socketio.on("read_tag")
+def read_tag():
+    """
+    Read from a tag
+    """
+    socketio.start_background_task(_read_tag_async, request.sid)
+
+
+def _read_tag_async(socket_id):
+    """
+    Read from a tag (async)
+    """
+    spool_data: Optional[dict[str, Any]] = spool_reader.read_spool()
+    result: dict[str, Any] = {
+        "success": spool_data is not None
+    }
+    if spool_data:
+        result["data"] = spool_data
+    socketio.emit("read_done", result, to=socket_id)
+
+
+@socketio.on("write_tag")
+def write_tag(tag_data):
+    """
+    Write to a tag
+    :param tag_data: Data to write to the tag
+    """
+    # TODO
 
 
 def start_web_app(port: int, debug=False):

@@ -302,6 +302,12 @@ class SpoolReader:
         """
         return self.reader.reader is not None
 
+    def cancel_wait_for_tag(self) -> None:
+        """
+        Cancel the waiting for a tag
+        """
+        self.reader.waiting_for_tag = False
+
     @classmethod
     def get_available_filament_types(cls) -> list[str]:
         """
