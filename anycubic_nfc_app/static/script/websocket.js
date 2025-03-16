@@ -7,3 +7,5 @@ function setConnectionState(connected) {
         document.getElementById("connectionState").innerHTML = "Disconnected";
     }
 }
+
+// loadFilamentData(jsonData)

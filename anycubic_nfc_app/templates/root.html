@@ -185,13 +185,13 @@
     </div>
 
     {% include 'components/foot.html' %}
-    <script src="/static/script/color-picker.js"></script>
     <script src="/static/script/optional-fields.js"></script>
-    <script src="/static/script/websocket.js"></script>
+    <script src="/static/script/color-picker.js"></script>
     <script src="/static/script/presets.js"></script>
     <script>
        updatePresets({{ filament_presets | tojson }});
     </script>
+    <script src="/static/script/websocket.js"></script>
 </div>
 </body>
 </html>
