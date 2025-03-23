@@ -71,7 +71,7 @@ Dump of the NTAG213 chip of a Bright White PLA+
 [Page 07] 31:30:32:00 -> ^^
 [Page 08] 00:00:00:00
 [Page 09] 00:00:00:00
-[Page 0a] 41:43:00:00 -> ("AC") (added for every spool in version 2) [?]
+[Page 0a] 41:43:00:00 -> Manufacturer: AC (Anycubic) (added for every spool in version 2)
 [Page 0b] 00:00:00:00
 [Page 0c] 00:00:00:00
 [Page 0d] 00:00:00:00
@@ -122,7 +122,7 @@ from [this](https://www.reddit.com/r/anycubic/comments/1g047ad/comment/mdz70s9/?
 [Page 07] 31:30:32:00 -> ^^
 [Page 08] 00:00:00:00 -> ^^
 [Page 09] 00:00:00:00 -> ^^
-[Page 0a] 41:43:00:00 -> ("AC") (added for every spool in version 2) [?]
+[Page 0a] 41:43:00:00 -> Manufacturer: AC (Anycubic) (added for every spool in version 2)
 [Page 0b] 00:00:00:00 -> ^^
 [Page 0c] 00:00:00:00 -> ^^
 [Page 0d] 00:00:00:00 -> ^^
@@ -133,8 +133,8 @@ from [this](https://www.reddit.com/r/anycubic/comments/1g047ad/comment/mdz70s9/?
 [Page 12] 65:64:00:00 -> ^^
 [Page 13] 00:00:00:00 -> ^^
 [Page 14] ff:00:06:e1 -> Color: #e10600 (opacity: 0xff)
-[Page 15] 00:00:00:00 -> (maybe color 2)
-[Page 16] 00:00:00:00 -> (maybe color 3)
+[Page 15] 00:00:00:00 -> (unknown - maybe color 2 later)
+[Page 16] 00:00:00:00 -> (unknown - maybe color 3 later)
 [Page 17] 32:00:96:00 -> Printing speed range 1: 50-150mm/s
 [Page 18] be:00:d2:00 -> Nozzle temp range 1: 190-210°C
 [Page 19] 96:00:2c:01 -> Printing speed range 2: 150-300mm/s

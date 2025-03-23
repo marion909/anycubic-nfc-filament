@@ -166,10 +166,8 @@ class SpoolData(CardData):
         """
         if version == 1:
             self._write_byte(0x04, 2, 0x64)
-            self._write_string(0x0a, "\x00\x00")
         elif version == 2:
             self._write_byte(0x04, 2, 0x65)
-            self._write_string(0x0a, "AC")
 
     def set_spool_specs(self, spool_specs: dict[str, Any]) -> None:
         """
@@ -181,8 +179,9 @@ class SpoolData(CardData):
         self._write_byte(0x27, 3, 0x4d)  # Custom spool marker
         self._set_format_version(2)
 
-        # SKU and type
+        # SKU, manufacturer and type
         self._write_string(0x05, self.SKUS.get(spool_specs["type"], "AHPLBK-101"))
+        self._write_string(0x0a, spool_specs.get("manufacturer", "AC"))
         self._write_string(0x0f, spool_specs["type"])
 
         # Color
@@ -242,6 +241,7 @@ class SpoolData(CardData):
         # Read specs
         spool_specs: dict[str, Any] = {
             "type": sku_type,
+            "manufacturer": self._read_string(0x0a),
             "color": self._read_color(0x14),
             "range_a": {
                 "speed_min": self._read_bytes(0x17, 0),
