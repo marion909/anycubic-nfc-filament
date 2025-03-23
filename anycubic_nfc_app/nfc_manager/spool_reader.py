@@ -100,6 +100,21 @@ class SpoolData(CardData):
             high_byte = self._read_byte(page, index + 1)
         return high_byte * 256 + low_byte
 
+    def read_uid(self) -> str:
+        """
+        Read the tags uid
+        :return: The hex uid
+        """
+        a = self._read_byte(0, 0)
+        b = self._read_byte(0, 1)
+        c = self._read_byte(0, 2)
+        d = self._read_byte(1, 0)
+        e = self._read_byte(1, 1)
+        f = self._read_byte(1, 2)
+        g = self._read_byte(1, 3)
+        uid: str = f"{a:02x}{b:02x}{c:02x}{d:02x}{e:02x}{f:02x}{g:02x}"
+        return uid
+
     def _write_color(self, page: int, hex_color: str) -> None:
         """
         Write a hex color (abgr)
@@ -240,6 +255,7 @@ class SpoolData(CardData):
 
         # Read specs
         spool_specs: dict[str, Any] = {
+            "uid": self.read_uid(),
             "type": sku_type,
             "manufacturer": self._read_string(0x0a),
             "color": self._read_color(0x14),
@@ -328,22 +344,22 @@ class SpoolReader:
         spool_data.pages = card_data.pages
         return spool_data.get_spool_specs()
 
-    def read_spool_raw(self) -> Optional[str]:
+    def read_spool_raw(self) -> tuple[Optional[str], Optional[str]]:
         """
         Wait for a spool, read it and return its raw data (+ interpretation if possible)
         :return: Raw data of the nfc tag
         """
         card_data: Optional[CardData] = self.reader.read_card()
         if not card_data:
-            return None
+            return None, None
         raw_data: str = card_data.dump()
         try:
             spool_data: SpoolData = SpoolData()
             spool_data.pages = card_data.pages
             interpretation: str = json.dumps(spool_data.get_spool_specs(), indent=4)
-            return f"{raw_data}\n\n{interpretation}"
+            return spool_data.read_uid(), f"{raw_data}\n\n{interpretation}"
         except:
-            return raw_data
+            return 14*"0", raw_data
 
     def write_spool(self, spool_specs: dict[str, Any]) -> bool:
         """

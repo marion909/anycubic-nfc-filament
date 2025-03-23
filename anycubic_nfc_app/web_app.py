@@ -229,6 +229,29 @@ def _write_tag_async(tag_data: dict[str, Any], socket_id):
     socketio.emit("write_done", result, to=socket_id)
 
 
+@socketio.on("create_dump")
+def create_dump():
+    """
+    Create a dump of a tag
+    """
+    socketio.start_background_task(_create_dump_async, request.sid)
+
+
+def _create_dump_async(socket_id):
+    """
+    Read from a tag (async)
+    :param socket_id: Id of the socket to respond to
+    """
+    uid, dump_data = spool_reader.read_spool_raw()
+    result: dict[str, Any] = {
+        "success": dump_data is not None
+    }
+    if dump_data:
+        result["filename"] = f"spool_dump_{uid}.txt"
+        result["data"] = dump_data
+    socketio.emit("dump_done", result, to=socket_id)
+
+
 def start_web_app(port: int):
     """
     Init point of the web app

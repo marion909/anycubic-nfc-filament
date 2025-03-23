@@ -1,6 +1,17 @@
 const socket = io();
 var canceled = false;
 
+function downloadTextFile(filename, content) {
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+}
+
 function updateConnectionState(connected) {
     if(connected) {
         document.getElementById("connectionDotStyle").innerHTML = "";
@@ -42,6 +53,11 @@ function writeTag() {
     }
 }
 
+function createDump() {
+    updateNFCOverlay(true);
+    socket.emit("create_dump");
+}
+
 function cancelNFC() {
     socket.emit("cancel_nfc");
 }
@@ -78,6 +94,21 @@ socket.on("write_done", (data) => {
         socket.emit("write_tag", getFilamentData());
     }
 })
+
+socket.on("dump_done", (data) => {
+    if(canceled) {
+        // Ignore if canceled
+        canceled = false;
+        return;
+    }
+    if(data.success) {
+        downloadTextFile(data.filename, data.data);
+        updateNFCOverlay(false);
+    } else {
+        updateNFCOverlay(true, true);
+        socket.emit("create_dump");
+    }
+});
 
 socket.on("canceled", (data) => {
     // Note canceled action
