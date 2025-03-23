@@ -34,11 +34,11 @@ Thanks for your support!
 
 ## FAQ
 
-**Why is the material type not displaying/recognized correctly on my printer?**
+### Why is the material type not displaying/recognized correctly on my printer?
 
 Try updating your ACE Pro (you can do that on the top right of the "Workbench" in Anycubic Slicer Next)
 
-**Why does the filament show as "?" in my slicer "Workbench" tab?**
+### Why does the filament show as "?" in my slicer "Workbench" tab?
 
 There currently seems to be a problem with displaying some filaments in the slicer "Workbench" tab correctly. Probably
 because they are not available with official RFID chips in the store yet. But: When syncing the ACE Pro in the "Prepare"
@@ -48,7 +48,7 @@ Currently, only the following filaments are displayed correctly in the "Workbenc
 you own official spools of other types with RFID chips, create a spool dump in the application and send it to me, to
 support my research and add it to the app. Read more in [this section](#supporting-the-research))
 
-**Why is the wrong filament type selected when syncing with the ACE Pro in the "Prepare" tab?**
+### Why is the wrong filament type selected when syncing with the ACE Pro in the "Prepare" tab?
 
 Make sure that the filament in the ACE Pro is available in the filament dropdown in your slicer. If not, select "
 Add/Remove filament" on the bottom of the list, add the filament to the list and try syncing again.
