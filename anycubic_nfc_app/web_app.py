@@ -212,11 +212,10 @@ def write_tag(tag_data):
     # TODO
 
 
-def start_web_app(port: int, debug=False):
+def start_web_app(port: int):
     """
     Init point of the web app
     :param port: The server port
-    :param debug: Debugging mode for auto reload
     """
     # Start web app
     socketio.run(app, port=port, host="0.0.0.0")
