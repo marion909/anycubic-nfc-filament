@@ -36,9 +36,10 @@ function readTag() {
 }
 
 function writeTag() {
-    updateNFCOverlay(true);
-    // socket.emit("write_tag", {});
-    // TODO
+    if(document.getElementById("spoolForm").reportValidity()) {
+        updateNFCOverlay(true);
+        socket.emit("write_tag", getFilamentData());
+    }
 }
 
 function cancelNFC() {
@@ -63,6 +64,20 @@ socket.on("read_done", (data) => {
         socket.emit("read_tag");
     }
 });
+
+socket.on("write_done", (data) => {
+    if(canceled) {
+        // Ignore if canceled
+        canceled = false;
+        return;
+    }
+    if(data.success) {
+        updateNFCOverlay(false);
+    } else {
+        updateNFCOverlay(true, true);
+        socket.emit("write_tag", getFilamentData());
+    }
+})
 
 socket.on("canceled", (data) => {
     // Note canceled action

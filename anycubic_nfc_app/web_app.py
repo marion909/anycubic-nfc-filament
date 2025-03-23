@@ -193,6 +193,7 @@ def read_tag():
 def _read_tag_async(socket_id):
     """
     Read from a tag (async)
+    :param socket_id: Id of the socket to respond to
     """
     spool_data: Optional[dict[str, Any]] = spool_reader.read_spool()
     result: dict[str, Any] = {
@@ -204,12 +205,28 @@ def _read_tag_async(socket_id):
 
 
 @socketio.on("write_tag")
-def write_tag(tag_data):
+def write_tag(tag_data: dict[str, Any]):
     """
     Write to a tag
     :param tag_data: Data to write to the tag
     """
-    # TODO
+    tag_data["diameter"] = 1.75
+    tag_data["length"] = 330
+    tag_data["weight"] = 1000
+    socketio.start_background_task(_write_tag_async, tag_data, request.sid)
+
+
+def _write_tag_async(tag_data: dict[str, Any], socket_id):
+    """
+    Write to a tag (async)
+    :param tag_data: Date to write to the tag
+    :param socket_id: Id of the socket to respond to
+    """
+    success: bool = spool_reader.write_spool(spool_specs=tag_data)
+    result: dict[str, Any] = {
+        "success": success
+    }
+    socketio.emit("write_done", result, to=socket_id)
 
 
 def start_web_app(port: int):
