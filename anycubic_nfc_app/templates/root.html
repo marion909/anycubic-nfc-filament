@@ -4,9 +4,11 @@
     {% include 'components/head.html' %}
     <style id="optionalStyle">
         .optional {display: none;}
+
     </style>
     <style id="connectionDotStyle">
         #connectionDot {background-color: #ed143d;}
+
     </style>
 </head>
 
@@ -208,7 +210,8 @@
             <p class="fs-5">Please lay the NFC tag on the scanner. Make sure to not move it away until this prompt
                 closes automatically.</p>
             <p class="fs-6 nfc-error" id="nfcError" style="display: none">An error occurred. Please remove the tag, wait
-                for the scanner light to turn red and try again. Also make sure that a NFC reader is connected.</p>
+                for the scanner light to turn red and try again (cancel if if won't turn green). Also make sure that a
+                NFC reader is connected.</p>
             <button class="btn btn-outline-dark" type="button" onclick="cancelNFC()">Cancel</button>
         </div>
     </div>
