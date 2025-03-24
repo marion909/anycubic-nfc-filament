@@ -13,8 +13,8 @@ The following hardware is needed (buy them via my affiliate links to support thi
 
 ## Using the Tool
 
-1) Make sure that python is installed on your
-   computer ([Python install guide](https://realpython.com/installing-python/))
+1) Make sure that [python 3.11](https://www.python.org/downloads/release/python-3118/) is installed on your
+   computer (the version 3.11 is important, older versions should be good but newer version lead to errors)
 2) Clone this repository and go to the root directory with a shell
 3) Install the requirements: `pip install -r requirements.txt`
 4) Start the tool: `python -m anycubic_nfc_app`
@@ -55,6 +55,11 @@ Add/Remove filament" on the bottom of the list, add the filament to the list and
 
 Currently, there is another known problem where PLA+ is recognized as PLA. As I have not found a workaround yet, I
 believe that it is a bug in the slicer that will also occur with official PLA+ filament from Anycubic.
+
+### Why is the application not starting?
+
+If the application fails to start, the error is the python version in most cases. Make sure to use version 3.11 or
+older. Newer versions can lead to crashes.
 
 ## Credits
 
