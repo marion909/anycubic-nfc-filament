@@ -14,6 +14,15 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
 socketio = SocketIO(app)
 
+
+# Fix error handling
+@socketio.on_error_default  # catches all unhandled errors
+def default_error_handler(e):
+    print("SocketIO error occurred:")
+    import traceback
+    traceback.print_exc()
+
+
 filament_presets: dict[str, dict[str, Any]] = {
     "PLA": {
         "type": "PLA",
