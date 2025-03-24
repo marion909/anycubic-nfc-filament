@@ -63,9 +63,11 @@ class ACR122U:
         :return: Reader connection
         """
         available_readers: list[Reader] = readers()
-        if not available_readers:
-            return None
-        return available_readers[0]
+        found_reader: Optional[Reader] = None
+        for reader in available_readers:
+            if "acr122u" in reader.name.lower():
+                found_reader = reader
+        return found_reader
 
     @classmethod
     def _read_page(cls, connection: CardConnection, page: int) -> Optional[bytes]:
