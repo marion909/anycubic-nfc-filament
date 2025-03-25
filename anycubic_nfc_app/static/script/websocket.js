@@ -28,7 +28,6 @@ function updateNFCOverlay(show, showError=false) {
     var error = document.getElementById('nfcError');
     if(show) {
         body.style = "overflow: hidden";
-        window.scrollTo(0, 0);
         if(showError) {
             error.style = "";
         } else {
