@@ -8,6 +8,7 @@ The following hardware is needed (buy them via my affiliate links to support thi
 
 - ACR122U NFC reader. Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
 - NTAG213 NFC stickers. Buy some [here](https://amzn.to/4kzatQm) (affiliate link)
+- (Optional) Reusable ACE Pro rings for cardboard spools with NFC sticker slot. Get the for free [here](https://makerworld.com/en/models/1266132-universal-cardboard-spool-adapter-ring-v2-nfc#profileId-1291900) 
 
 *Note: You will need two NFC stickers per spool of filament.*
 
