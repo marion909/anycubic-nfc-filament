@@ -2,6 +2,11 @@
 
 A tool to create NFC tags compatible with the Anycubic ACE Pro for third party filament spools.
 
+<p align="center">
+  <img src="readme_images/nfc_app_main.png" width="49%" />
+  <img src="readme_images/nfc_app_write.png" width="49%" />
+</p>
+
 ## Required Hardware
 
 The following hardware is needed (buy them via my affiliate links to support this project without additional costs):
