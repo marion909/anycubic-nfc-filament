@@ -13,19 +13,25 @@ The following hardware is needed (buy them via my affiliate links to support thi
 
 - ACR122U NFC reader. Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
 - NTAG213 NFC stickers. Buy some [here](https://amzn.to/4kzatQm) (affiliate link)
-- (Optional) Reusable ACE Pro rings for cardboard spools with NFC sticker slot. Get the for free [here](https://makerworld.com/en/models/1266132-universal-cardboard-spool-adapter-ring-v2-nfc#profileId-1291900) 
+- (Optional) Reusable ACE Pro rings for cardboard spools with NFC sticker slot. Get the for
+  free [here](https://makerworld.com/en/models/1266132-universal-cardboard-spool-adapter-ring-v2-nfc#profileId-1291900)
 
 *Note: You will need two NFC stickers per spool of filament.*
 
 ## Using the Tool
 
+> For a more comprehensive guide, you can check out my YouTube video [here](https://youtu.be/I4hJaSD-rVs) (German)
+
 1) Make sure that [python 3.11](https://www.python.org/downloads/release/python-3118/) is installed on your
    computer (the version 3.11 is important, older versions should be good but newer version lead to errors)
-2) Clone this repository and go to the root directory with a shell
-3) Install the requirements: `pip install -r requirements.txt`
-4) Start the tool: `python -m anycubic_nfc_app`
-5) Open the web interface in your browser by entering http://localhost:8080 into the top bar
-6) Make sure that a [ACR122U](https://amzn.to/4h24oZQ) (affiliate link) is connected to your computer
+2) Clone this repository and go to the root directory (the one with the `requirements.txt`) with a shell (on most
+   operating systems, you can open the folder and then right-click and select something like `open shell here`)
+3) Do the upcoming steps within the shell hust opened
+4) Install the requirements with the command `pip install -r requirements.txt`
+5) Start the tool with the shell command `python -m anycubic_nfc_app`
+6) Open the web interface in your browser (e.g. Google Chrome) by entering http://localhost:8080 into the top bar
+7) Make sure that a [ACR122U](https://amzn.to/4h24oZQ) (affiliate link) is connected to your computer
+8) Done. Have fun using the software :)
 
 ## Supporting the Research
 
