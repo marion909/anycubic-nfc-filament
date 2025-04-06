@@ -9,6 +9,8 @@ A tool to create NFC tags compatible with the Anycubic ACE Pro for third party f
 
 ## Required Hardware
 
+> Tip: Try to get the software up and running before buying the hardware to ensure that everything works fine
+
 The following hardware is needed (buy them via my affiliate links to support this project without additional costs):
 
 - ACR122U NFC reader. Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
@@ -19,6 +21,28 @@ The following hardware is needed (buy them via my affiliate links to support thi
 *Note: You will need two NFC stickers per spool of filament.*
 
 ## Using the Tool
+
+### Option 1: Executable File for Windows Systems (Easy)
+
+1) Download the latest `.exe` file of the
+   application [here](https://github.com/Molodos/anycubic-nfc-filament/releases/latest)
+2) Start the application on your Windows device by just double-clicking it
+3) Open the web interface in your browser (e.g. Google Chrome) by entering http://localhost:8080 into the top bar
+4) Make sure that a [ACR122U](https://amzn.to/4h24oZQ) (affiliate link) is connected to your computer
+5) Done. Have fun using the software :)
+
+#### Generating the Executable File by Yourself
+
+> Note: This is not needed if you just download the `.exe` file
+
+1) Install the requirements with `pip install -r requirements.txt`
+2) Create the binary for your system:
+   ```shell
+   pyinstaller AnycubicNFCApp.spec
+   ```
+3) The executable can be found in the `dist` folder
+
+### Option 2: Running the Python Script for all Systems (Intermediate)
 
 > For a more comprehensive guide, you can check out my YouTube video [here](https://youtu.be/I4hJaSD-rVs) (German)
 

@@ -12,7 +12,7 @@ from .nfc_manager import SpoolReader
 # App settings
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode="eventlet")
 
 
 # Fix error handling
@@ -267,4 +267,6 @@ def start_web_app(port: int):
     :param port: The server port
     """
     # Start web app
+    print("Anycubic NFC App started. Access it under http://localhost:8080")
+    print("Press Ctrl+C or just close this window to exit")
     socketio.run(app, port=port, host="0.0.0.0")
