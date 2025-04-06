@@ -112,7 +112,7 @@ to the application. The following two options are available:
 The additional options can be added to the command starting the application:
 
 - Option 1 (launching the exe from a shell): `AnycubicNFCApp.exe --print_readers --preferred_reader "acr122"`
-- Option 2 (python script9: `python -m anycubic_nfc_app --print_readers --preferred_reader "acr122"`
+- Option 2 (python script): `python -m anycubic_nfc_app --print_readers --preferred_reader "acr122"`
 
 ## Credits
 
