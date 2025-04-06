@@ -2,4 +2,5 @@ Flask
 pyscard
 Flask-SocketIO
 eventlet
+argparse
 pyinstaller

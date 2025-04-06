@@ -1,4 +1,7 @@
+import argparse
+
 import eventlet
+from smartcard.System import readers
 
 eventlet.monkey_patch()
 
@@ -7,7 +10,7 @@ from typing import Any, Optional
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 
-from .nfc_manager import SpoolReader
+from .nfc_manager import SpoolReader, ACR122U
 
 # App settings
 app = Flask(__name__)
@@ -261,12 +264,45 @@ def _create_dump_async(socket_id):
     socketio.emit("dump_done", result, to=socket_id)
 
 
+def get_connected_readers() -> list[str]:
+    """
+    Get the connected readers
+    :return: List of connected readers
+    """
+    return [r.name.lower() for r in readers()]
+
+
+def set_preferred_reader(reader_filter: str) -> None:
+    """
+    Set the preferred reader
+    :param reader_filter: String that the reader needs to contain
+    """
+    if reader_filter:
+        ACR122U.preferred_reader = reader_filter
+
+
 def start_web_app(port: int):
     """
     Init point of the web app
     :param port: The server port
     """
+    # Parse args
+    parser: argparse.ArgumentParser = argparse.ArgumentParser()
+    parser.add_argument('--print_readers', action='store_true',
+                        help='Add this flag to print connected readers on startup')
+    parser.add_argument('--preferred_reader', type=str, default=None,
+                        help='Name of the default reader to select (the name must be part of the actual reader name)')
+    args = parser.parse_args()
+
     # Start web app
+    if args.print_readers:
+        print(f"Connected readers: {get_connected_readers()}\n")
+
+    # Add extra supported reader
+    if args.preferred_reader:
+        print(f"Set '{args.preferred_reader}' as preferred readers\n")
+        set_preferred_reader(args.preferred_reader)
+
     print("Anycubic NFC App started. Access it under http://localhost:8080")
     print("Press Ctrl+C or just close this window to exit")
     socketio.run(app, port=port, host="0.0.0.0")

@@ -36,6 +36,8 @@ class ACR122U:
     ACR122U reader/writer
     """
 
+    preferred_reader: Optional[str] = None
+
     def __init__(self):
         """
         Create an instance
@@ -64,9 +66,14 @@ class ACR122U:
         """
         available_readers: list[Reader] = readers()
         found_reader: Optional[Reader] = None
-        for reader in available_readers:
-            if "acr122" in reader.name.lower() or "acr1252" in reader.name.lower:
-                found_reader = reader
+        if cls.preferred_reader:
+            for reader in available_readers:
+                if cls.preferred_reader in reader.name.lower():
+                    found_reader = reader
+        if not found_reader:
+            for reader in available_readers:
+                if "acr" in reader.name.lower():
+                    found_reader = reader
         return found_reader
 
     @classmethod
