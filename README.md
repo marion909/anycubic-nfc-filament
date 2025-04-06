@@ -15,7 +15,7 @@ The following hardware is needed (buy them via my affiliate links to support thi
 
 - A supported reader from this list:
     - ACR122U NFC reader (recommended). Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
-    - ACR1252U NFC reader. Buy one [here](https://amzn.to/3E6WPUo) (affiliate link)
+    - ACR1252U NFC reader (community-tested). Buy one [here](https://amzn.to/3E6WPUo) (affiliate link)
 - NTAG213 NFC stickers. Buy some [here](https://amzn.to/4kzatQm) (affiliate link)
 - (Optional) Reusable ACE Pro rings for cardboard spools with NFC sticker slot. Get the for
   free [here](https://makerworld.com/en/models/1266132-universal-cardboard-spool-adapter-ring-v2-nfc#profileId-1291900)
