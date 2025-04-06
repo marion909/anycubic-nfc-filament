@@ -36,6 +36,11 @@ class ACR122U:
     ACR122U reader/writer
     """
 
+    # List of supported readers (each one has a list of strings that need to be part of its name)
+    supported_readers: list[list[str]] = [
+        ["acr122"],
+        ["acr1252", "picc"]
+    ]
     preferred_reader: Optional[str] = None
 
     def __init__(self):
@@ -66,14 +71,25 @@ class ACR122U:
         """
         available_readers: list[Reader] = readers()
         found_reader: Optional[Reader] = None
+
+        # Check preferred reader
         if cls.preferred_reader:
             for reader in available_readers:
-                if cls.preferred_reader in reader.name.lower():
+                if cls.preferred_reader.lower() in reader.name.lower():
                     found_reader = reader
+
+        # Check supported readers
         if not found_reader:
             for reader in available_readers:
-                if "acr" in reader.name.lower():
-                    found_reader = reader
+                # There are multiple supported readers
+                for parts in cls.supported_readers:
+                    is_supported = True
+                    # Each supported reader has multiple parts that the name needs to contain
+                    for part in parts:
+                        if part.lower() not in reader.name.lower():
+                            is_supported = False
+                    if is_supported:
+                        found_reader = reader
         return found_reader
 
     @classmethod

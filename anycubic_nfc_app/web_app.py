@@ -291,7 +291,7 @@ def start_web_app(port: int):
     parser.add_argument('--print_readers', action='store_true',
                         help='Add this flag to print connected readers on startup')
     parser.add_argument('--preferred_reader', type=str, default=None,
-                        help='Name of the default reader to select (the name must be part of the actual reader name)')
+                        help='Default reader to select (the reader name must contain that)')
     args = parser.parse_args()
 
     # Start web app
@@ -300,7 +300,7 @@ def start_web_app(port: int):
 
     # Add extra supported reader
     if args.preferred_reader:
-        print(f"Set '{args.preferred_reader}' as preferred readers\n")
+        print(f"Set '{args.preferred_reader}' as preferred reader (the reader name must contain that)\n")
         set_preferred_reader(args.preferred_reader)
 
     print("Anycubic NFC App started. Access it under http://localhost:8080")

@@ -13,7 +13,9 @@ A tool to create NFC tags compatible with the Anycubic ACE Pro for third party f
 
 The following hardware is needed (buy them via my affiliate links to support this project without additional costs):
 
-- ACR122U NFC reader. Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
+- A supported reader from this list:
+    - ACR122U NFC reader (recommended). Buy one [here](https://amzn.to/4h24oZQ) (affiliate link)
+    - ACR1252U NFC reader. Buy one [here](https://amzn.to/3E6WPUo) (affiliate link)
 - NTAG213 NFC stickers. Buy some [here](https://amzn.to/4kzatQm) (affiliate link)
 - (Optional) Reusable ACE Pro rings for cardboard spools with NFC sticker slot. Get the for
   free [here](https://makerworld.com/en/models/1266132-universal-cardboard-spool-adapter-ring-v2-nfc#profileId-1291900)
@@ -96,6 +98,21 @@ believe that it is a bug in the slicer that will also occur with official PLA+ f
 
 If the application fails to start, the error is the python version in most cases. Make sure to use version 3.11 or
 older. Newer versions can lead to crashes.
+
+### How can I use other NFC readers than the ACR122U?
+
+Readers not on the hardware list are currently not supported. But you can still try using them by adding start options
+to the application. The following two options are available:
+
+| Option                                                                   | Description                                                                                                                                                            |
+|--------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--print_readers`                                                        | Add this option to print a list of connected card readers to the shell, when starting the application (use it to find the name for the second option)                  |
+| `--preferred_reader "<string>"` (example: `--preferred_reader "acr122"`) | Use this option to set your preferred reader to be selected from the connected readers (it selects the last reader in the list, which contains the string in its name) |
+
+The additional options can be added to the command starting the application:
+
+- Option 1 (launching the exe from a shell): `AnycubicNFCApp.exe --print_readers --preferred_reader "acr122"`
+- Option 2 (python script9: `python -m anycubic_nfc_app --print_readers --preferred_reader "acr122"`
 
 ## Credits
 
