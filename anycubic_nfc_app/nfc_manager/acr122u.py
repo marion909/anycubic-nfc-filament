@@ -65,7 +65,7 @@ class ACR122U:
         available_readers: list[Reader] = readers()
         found_reader: Optional[Reader] = None
         for reader in available_readers:
-            if "acr122" in reader.name.lower():
+            if "acr122" in reader.name.lower() or "acr1252" in reader.name.lower:
                 found_reader = reader
         return found_reader
 
