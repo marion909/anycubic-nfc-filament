@@ -31,15 +31,15 @@ class CardData:
         return "\n".join(pages)
 
 
-class READERS_NFC:
+class NFCReader:
     """
-    A list of supported nfc readers
+    A wrapper for NFC reader devices
     """
 
     # List of supported readers (each one has a list of strings that need to be part of its name)
     supported_readers: list[list[str]] = [
         ["acr122"],
-        ["acr1252", "picc"] #The ACR1252 will be recognised as two readers one as PICC one as SAM (that one won`t work)
+        ["acr1252", "picc"]  # The ACR1252 will be recognized as two readers: PICC and SAM (that one won`t work)
     ]
     preferred_reader: Optional[str] = None
 

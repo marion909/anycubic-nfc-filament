@@ -1,7 +1,7 @@
 import json
 from typing import Any, Optional
 
-from .nfc_readers import CardData, READERS_NFC
+from .nfc_reader import CardData, NFCReader
 
 
 class SpoolData(CardData):
@@ -309,7 +309,7 @@ class SpoolReader:
         """
         Initialize card reader
         """
-        self.reader: READERS_NFC = READERS_NFC()
+        self.reader: NFCReader = NFCReader()
 
     def get_connection_state(self) -> bool:
         """
