@@ -116,6 +116,11 @@ The additional options can be added to the command starting the application:
 - Option 1 (launching the exe from a shell): `AnycubicNFCApp.exe --print_readers --preferred_reader "acr122"`
 - Option 2 (python script): `python -m anycubic_nfc_app --print_readers --preferred_reader "acr122"`
 
+If you tested a reader successfully, and you want me to add it for official support, you can do this by sending me the
+list of connected readers displayed with the option `--print_readers` and the reader connected as well as the name of
+the displayed readers which works when putting it into the `--preferred_reader` parameter. Make sure to test that
+reading and writing works.
+
 ## Credits
 
 Special thanks
