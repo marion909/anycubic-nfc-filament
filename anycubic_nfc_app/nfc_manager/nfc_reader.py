@@ -1,10 +1,32 @@
 import threading
 import time
-from typing import List, Optional
+import sys
+from typing import List, Optional, Union, Any
 
-from smartcard.CardConnection import CardConnection
-from smartcard.System import readers
-from smartcard.reader.Reader import Reader
+# Add better error handling for smartcard imports
+try:
+    from smartcard.CardConnection import CardConnection
+    from smartcard.System import readers
+    from smartcard.reader.Reader import Reader
+    SMARTCARD_AVAILABLE = True
+except ImportError:
+    # Create dummy classes for type hints when smartcard is not available
+    class CardConnection:
+        def transmit(self, *args, **kwargs):
+            pass
+        
+        def connect(self):
+            pass
+    
+    class Reader:
+        def __init__(self):
+            self.name = ""
+        
+        def createConnection(self):
+            return CardConnection()
+    
+    SMARTCARD_AVAILABLE = False
+    print("[Warning] pyscard library not available. NFC functionality will be limited.")
 
 
 class CardData:

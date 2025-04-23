@@ -4,3 +4,5 @@ Flask-SocketIO
 eventlet
 argparse
 pyinstaller
+PyQt5
+PyQtWebEngine

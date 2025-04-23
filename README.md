@@ -24,16 +24,31 @@ The following hardware is needed (buy them via my affiliate links to support thi
 
 ## Using the Tool
 
-### Option 1: Executable File for Windows Systems (Easy)
+### Option 1: Desktop Application for Windows Systems (Easy)
 
-1) Download the latest `.exe` file of the
-   application [here](https://github.com/Molodos/anycubic-nfc-filament/releases/latest)
+1) Download the latest desktop application `.exe` file [here](https://github.com/Molodos/anycubic-nfc-filament/releases/latest)
+2) Start the application on your Windows device by just double-clicking it
+3) The application will open with its own interface window
+4) Make sure that a [ACR122U](https://amzn.to/4h24oZQ) (affiliate link) is connected to your computer
+5) Done. Have fun using the software :)
+
+#### Generating the Desktop Application by Yourself
+
+> Note: This is not needed if you just download the `.exe` file
+
+1) Run the `build_desktop_app.bat` file by double-clicking it
+2) The script will install the required packages and build the executable
+3) The executable can be found in the `dist` folder
+
+### Option 2: Web Application for Windows Systems
+
+1) Download the latest web application `.exe` file [here](https://github.com/Molodos/anycubic-nfc-filament/releases/latest)
 2) Start the application on your Windows device by just double-clicking it
 3) Open the web interface in your browser (e.g. Google Chrome) by entering http://localhost:8080 into the top bar
 4) Make sure that a [ACR122U](https://amzn.to/4h24oZQ) (affiliate link) is connected to your computer
 5) Done. Have fun using the software :)
 
-#### Generating the Executable File by Yourself
+#### Generating the Web Application Executable by Yourself
 
 > Note: This is not needed if you just download the `.exe` file
 
@@ -44,12 +59,11 @@ The following hardware is needed (buy them via my affiliate links to support thi
    ```
 3) The executable can be found in the `dist` folder
 
-### Option 2: Running the Python Script for all Systems (Intermediate)
+### Option 3: Running the Python Script for all Systems (Intermediate)
 
 > For a more comprehensive guide, you can check out my YouTube video [here](https://youtu.be/I4hJaSD-rVs) (German)
 
-1) Make sure that [python 3.11](https://www.python.org/downloads/release/python-3118/) is installed on your
-   computer (the version 3.11 is important, older versions should be good but newer version lead to errors)
+1) Make sure that Python 3.11 or newer (including Python 3.12) is installed on your computer
 2) Clone this repository and go to the root directory (the one with the `requirements.txt`) with a shell (on most
    operating systems, you can open the folder and then right-click and select something like `open shell here`)
 3) Do the upcoming steps within the shell hust opened
@@ -98,8 +112,30 @@ believe that it is a bug in the slicer that will also occur with official PLA+ f
 
 ### Why is the application not starting?
 
-If the application fails to start, the error is the python version in most cases. Make sure to use version 3.11 or
-older. Newer versions can lead to crashes.
+If the application fails to start, check if all dependencies are installed correctly. You can run the `test_dependencies.bat` script to verify that all required packages are available. Also make sure that your NFC reader is properly connected to your computer.
+
+### I'm getting a "Long Path" error when installing packages with Python 3.12
+
+Python 3.12 on Windows may encounter issues with long file paths during package installation. To fix this:
+
+1. Run the `install_dependencies.bat` script as administrator, which will attempt to enable Windows Long Path support automatically
+2. If that doesn't work, you can manually enable Windows Long Path support:
+   - Open Registry Editor (regedit.exe)
+   - Navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem
+   - Set LongPathsEnabled to 1
+   - Restart your computer
+
+### Python is not found or not in PATH
+
+If you see an error that Python is not found or not in PATH, try the following:
+
+1. Make sure Python is installed correctly from https://www.python.org/downloads/
+2. Check the "Add Python to PATH" option during installation
+3. For Windows Store Python installations, you may need to disable app execution aliases:
+   - Open Windows Settings
+   - Go to Apps > Apps & features > App execution aliases
+   - Turn off the Python aliases
+4. The updated batch scripts will try to find Python in various locations, but if they still can't find it, you may need to manually add Python to your PATH environment variable
 
 ### How can I use other NFC readers than the ACR122U?
 

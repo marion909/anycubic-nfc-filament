@@ -1,7 +1,8 @@
 import json
-from typing import Any, Optional
+import traceback
+from typing import Any, Optional, Tuple, Union
 
-from .nfc_reader import CardData, NFCReader
+from .nfc_reader import CardData, NFCReader, SMARTCARD_AVAILABLE
 
 
 class SpoolData(CardData):
@@ -337,29 +338,49 @@ class SpoolReader:
         Wait for a spool, read it and return its data
         :return: JSON data of the spool on success else None
         """
-        card_data: Optional[CardData] = self.reader.read_card()
-        if not card_data:
+        if not SMARTCARD_AVAILABLE:
+            print("[Error] Cannot read spool: pyscard library not available")
             return None
-        spool_data: SpoolData = SpoolData()
-        spool_data.pages = card_data.pages
-        return spool_data.get_spool_specs()
+            
+        try:
+            card_data: Optional[CardData] = self.reader.read_card()
+            if not card_data:
+                return None
+            spool_data: SpoolData = SpoolData()
+            spool_data.pages = card_data.pages
+            return spool_data.get_spool_specs()
+        except Exception as e:
+            print(f"[Error] Failed to read spool: {str(e)}")
+            traceback.print_exc()
+            return None
 
     def read_spool_raw(self) -> tuple[Optional[str], Optional[str]]:
         """
         Wait for a spool, read it and return its raw data (+ interpretation if possible)
         :return: Raw data of the nfc tag
         """
-        card_data: Optional[CardData] = self.reader.read_card()
-        if not card_data:
+        if not SMARTCARD_AVAILABLE:
+            print("[Error] Cannot read spool raw: pyscard library not available")
             return None, None
-        raw_data: str = card_data.dump()
+            
         try:
-            spool_data: SpoolData = SpoolData()
-            spool_data.pages = card_data.pages
-            interpretation: str = json.dumps(spool_data.get_spool_specs(), indent=4)
-            return spool_data.read_uid(), f"{raw_data}\n\n{interpretation}"
-        except:
-            return 14*"0", raw_data
+            card_data: Optional[CardData] = self.reader.read_card()
+            if not card_data:
+                return None, None
+            raw_data: str = card_data.dump()
+            try:
+                spool_data: SpoolData = SpoolData()
+                spool_data.pages = card_data.pages
+                interpretation: str = json.dumps(spool_data.get_spool_specs(), indent=4)
+                return spool_data.read_uid(), f"{raw_data}\n\n{interpretation}"
+            except Exception as e:
+                print(f"[Error] Failed to interpret spool data: {str(e)}")
+                traceback.print_exc()
+                return 14*"0", raw_data
+        except Exception as e:
+            print(f"[Error] Failed to read spool raw: {str(e)}")
+            traceback.print_exc()
+            return None, None
 
     def write_spool(self, spool_specs: dict[str, Any]) -> bool:
         """
@@ -367,6 +388,15 @@ class SpoolReader:
         :param spool_specs: JSON spool data
         :return: Success state
         """
-        spool_data: SpoolData = SpoolData()
-        spool_data.set_spool_specs(spool_specs)
-        return self.reader.write_card(spool_data)
+        if not SMARTCARD_AVAILABLE:
+            print("[Error] Cannot write spool: pyscard library not available")
+            return False
+            
+        try:
+            spool_data: SpoolData = SpoolData()
+            spool_data.set_spool_specs(spool_specs)
+            return self.reader.write_card(spool_data)
+        except Exception as e:
+            print(f"[Error] Failed to write spool: {str(e)}")
+            traceback.print_exc()
+            return False

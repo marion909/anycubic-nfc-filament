@@ -1,0 +1,16 @@
+@echo off
+echo Cleaning build artifacts for Anycubic NFC Desktop Application...
+echo.
+
+echo Removing build directory...
+if exist build rmdir /s /q build
+echo Removing dist directory...
+if exist dist rmdir /s /q dist
+echo Removing __pycache__ directories...
+for /d /r . %%d in (__pycache__) do @if exist "%%d" rmdir /s /q "%%d"
+echo Preserving our custom spec files...
+
+echo.
+echo Cleanup complete!
+echo.
+pause

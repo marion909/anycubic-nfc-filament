@@ -1,11 +1,18 @@
 import argparse
-
-import eventlet
-from smartcard.System import readers
-
-eventlet.monkey_patch()
-
+import threading
+import time
+import os
 from typing import Any, Optional
+
+# Try to import eventlet, but fall back to threading if it's not available or causes issues
+try:
+    import eventlet
+    from smartcard.System import readers
+    eventlet.monkey_patch()
+    ASYNC_MODE = "eventlet"
+except (ImportError, SyntaxError):
+    from smartcard.System import readers
+    ASYNC_MODE = "threading"
 
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
@@ -15,7 +22,18 @@ from .nfc_manager import SpoolReader, NFCReader
 # App settings
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
-socketio = SocketIO(app, async_mode="eventlet")
+
+# Explicitly set template and static folders
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+# Recreate Flask app with explicit template and static folders
+app = Flask(__name__, 
+            template_folder=template_dir,
+            static_folder=static_dir)
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024  # Max upload size of 1MB
+
+socketio = SocketIO(app, async_mode=ASYNC_MODE)
 
 
 # Fix error handling
@@ -281,28 +299,34 @@ def set_preferred_reader(reader_filter: str) -> None:
         NFCReader.preferred_reader = reader_filter
 
 
-def start_web_app(port: int):
+def start_web_app(port: int, is_desktop_app: bool = False):
     """
     Init point of the web app
     :param port: The server port
+    :param is_desktop_app: Whether the app is running as a desktop app
     """
-    # Parse args
-    parser: argparse.ArgumentParser = argparse.ArgumentParser()
-    parser.add_argument('--print_readers', action='store_true',
-                        help='Add this flag to print connected readers on startup')
-    parser.add_argument('--preferred_reader', type=str, default=None,
-                        help='Default reader to select (the reader name must contain that)')
-    args = parser.parse_args()
+    # Parse args (only if not running as desktop app)
+    if not is_desktop_app:
+        parser: argparse.ArgumentParser = argparse.ArgumentParser()
+        parser.add_argument('--print_readers', action='store_true',
+                            help='Add this flag to print connected readers on startup')
+        parser.add_argument('--preferred_reader', type=str, default=None,
+                            help='Default reader to select (the reader name must contain that)')
+        args = parser.parse_args()
 
-    # Start web app
-    if args.print_readers:
-        print(f"Connected readers: {get_connected_readers()}\n")
+        # Start web app
+        if args.print_readers:
+            print(f"Connected readers: {get_connected_readers()}\n")
 
-    # Add extra supported reader
-    if args.preferred_reader:
-        print(f"Set '{args.preferred_reader}' as preferred reader (the reader name must contain that)\n")
-        set_preferred_reader(args.preferred_reader)
+        # Add extra supported reader
+        if args.preferred_reader:
+            print(f"Set '{args.preferred_reader}' as preferred reader (the reader name must contain that)\n")
+            set_preferred_reader(args.preferred_reader)
 
-    print("Anycubic NFC App started. Access it under http://localhost:8080")
+    # Set host based on whether we're running as a desktop app
+    host = "127.0.0.1" if is_desktop_app else "0.0.0.0"
+    
+    print(f"Anycubic NFC App started. Access it under http://localhost:{port}")
     print("Press Ctrl+C or just close this window to exit")
-    socketio.run(app, port=port, host="0.0.0.0")
+    
+    socketio.run(app, port=port, host=host)
