@@ -1,2 +1,2 @@
 from .nfc_reader import NFCReader
-from .spool_reader import SpoolReader
+from .spool_reader import SpoolReader, SpoolData
